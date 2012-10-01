@@ -1,0 +1,5 @@
+OpenRPG
+-------
+Abstract
+~~~~~~~~
+A web based RPG framework using PHP, MySQL, and JavaEE.
