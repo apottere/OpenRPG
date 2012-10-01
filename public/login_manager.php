@@ -1,21 +1,21 @@
-<?php session_name("orpg"); session_start();
+<?php 
 
-	include("banner.php");
-	$srcdir = "../hidden";
+	include("page_defaults.php");
+	session_name($sess_name); session_start();
 	
 	if(isset($_POST['login'])) {
-		include("$srcdir/auth/login_action.php");
+		include("$authdir/login_action.php");
 
 	} else if(isset($_POST['cancelverify'])) {
-		include("$srcdir/auth/quick_logout.php");
+		include("$authdir/quick_logout.php");
 		exit;
 
 	} else if(isset($_POST['verify'])) {
-		include("$srcdir/auth/verify_action.php");
+		include("$authdir/verify_action.php");
 		exit;
 
 	} else if(isset($_POST['requestemail'])) {
-		include("$srcdir/auth/email.php");
+		include("$authdir/email.php");
 		exit;
 
 	} else if(isset($_POST['cancelchange'])) {
@@ -23,10 +23,10 @@
 		exit;
 
 	} else if(isset($_POST['changepassword']) || isset($_POST['changeusername']) || isset($_POST['changeemail'])) {
-		include("$srcdir/auth/change_action.php");
+		include("$authdir/change_action.php");
 
 	} else if(isset($_POST['create'])) {
-		include("$srcdir/auth/create_action.php");
+		include("$authdir/create_action.php");
 
 	} else if(isset($_POST['cancelcreate'])) {
 		header("Location: login_manager.php?a=login");
@@ -38,7 +38,7 @@
 	
 	} else if(isset($_GET['a'])) {
 		$a = $_GET['a'];
-		include("$srcdir/auth/links.php");
+		include("$authdir/links.php");
 		$page = $links["$a"][1];
 		$perms = $links["$a"][2];
 
@@ -48,23 +48,23 @@
 
 		} else if(isset($_SESSION['logged_in']) && $perms == 0) {
 			open_html(NULL);
-			include("$srcdir/auth/logged_in.php");
+			include("$authdir/logged_in.php");
 			close_html();
 
 		} else if(!isset($_SESSION['logged_in']) && $perms == 1) {
 			open_html(NULL);
-			include("$srcdir/auth/logged_in.php");
+			include("$authdir/logged_in.php");
 			close_html();
 
 		} else if(($perms == 1) && $a != "switch" && $a != "logout" && $a != "verify"){
 			open_html(NULL);
-			disp_banner(NULL);
-			include("$srcdir$page");
+			disp_banner(NULL, $links_loc, $alias);
+			include("$authdir$page");
 			close_html();
 
 		} else {
 			open_html(NULL);
-			include("$srcdir$page");
+			include("$authdir$page");
 			close_html();
 		}
 		

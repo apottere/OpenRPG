@@ -2,7 +2,7 @@
 <h1 align="center">
 	This page requires authentication!
 </h1>
-<p align="center">If you have already registered, please log in.  If not, <a href="login_manager.php?a=create">create an account</a> or go back to <a href="/">ModelofNothing home.</a></p>
+<p align="center">If you have already registered, please log in.  If not, <a href="login_manager.php?a=create">create an account</a> or go back to <a href="/">the homepage</a></p>
 <?php
 	if(isset($_SESSION['error'])) {
 		echo '<p class="error">' . $_SESSION['error'] . "</p>";

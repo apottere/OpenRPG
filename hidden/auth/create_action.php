@@ -1,9 +1,8 @@
 <?php
-	$srcdir = "../hidden";
-	include("$srcdir/auth/validate_secure.php");
-	mysql_connect("localhost", "andrew");
-	mysql_select_db("andrew");
-	$table = "orpg_users";
+	include("defaults.php");
+	include("validate_secure.php");
+	mysql_connect($db_loc, $db_user);
+	mysql_select_db($db_name);
 
 	$salt = rand_string(16);
 	$name = plain_escape($_POST["username"]);
@@ -22,6 +21,7 @@
 		exit;
 		
 	} else if(!validate_username($name)) {
+		$_SESSION['error'] = "Username is invalid, please try again.";
 		session_write_close();
 		header("Location: login_manager.php?a=create");
 		exit;
@@ -33,8 +33,7 @@
 		exit;
 
 	} else if($pass != $pass2) {
-		unset($_SESSION['my_error']);
-		$_SESSION['my_error'] = "Passwords did not match, please try again.";
+		$_SESSION['error'] = "Passwords did not match, please try again.";
 		session_write_close();
 		header("Location: login_manager.php?a=create");
 		exit;

@@ -1,8 +1,10 @@
-<?php session_name("orpg"); session_start();
-	include("banner.php");
+<?php 
+	include("page_defaults.php");
+	session_name($sess_name); session_start();
+
 	auth_check();
 	open_html(NULL);
-	disp_banner("home");
+	disp_banner("home", $links_loc, $alias);
 ?>
 <h3>This is the home page!</h3>
 <p>Here's the ORPG.  Tada.</p>

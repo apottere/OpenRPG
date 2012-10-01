@@ -1,9 +1,10 @@
 <?php
-$srcdir = "../hidden";
-include("$srcdir/auth/validate_secure.php");
-mysql_connect("localhost", "andrew");
-mysql_select_db("andrew");
-$table = "orpg_users";
+
+include("validate_secure.php");
+include("defaults.php");
+
+mysql_connect($db_loc, $db_user);
+mysql_select_db($db_name);
 
 $name = plain_escape($_POST["username"]);
 $query = mysql_query("select id from $table where username='$name';");
