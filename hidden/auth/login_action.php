@@ -3,7 +3,7 @@
 include("validate_secure.php");
 include("defaults.php");
 
-mysql_connect($db_loc, $db_user);
+mysql_connect($db_loc, $db_user, $db_pass);
 mysql_select_db($db_name);
 
 $name = plain_escape($_POST["username"]);

@@ -1,22 +1,30 @@
 <?php
-	echo <<<EOT
+
+	include("../page_defaults.php");
+	session_name($sess_name); session_start();
+	
+	auth_check($alias, "user");
+	open_html(NULL);
+	disp_banner("profile", $links_loc, $alias);
+?>
 
 <h1>
 	Change your e-mail here.
 </h1>
-EOT;
+
+<?php
 	$user = $_SESSION['user'];
 	if(isset($_SESSION['error'])) {
 		echo '<p style="color:RED;">' . $_SESSION['error'] . '</p>';
 		unset($_SESSION['error']);
 		session_write_close();
 	}
-	echo <<<EOT
-<form method="POST">
+?>
+<form method="POST" action="../login_manager.php">
 	<table class="noborder">
 	<tr>
 		<td><p>Username: </p></td>
-		<td><p>$user</p></td>
+		<td><p><?php echo $user; ?></p></td>
 	</tr>
 	<tr>
 		<td><p>Password: </p></td>
@@ -32,6 +40,5 @@ EOT;
 	</tr>
 	</table>
 </form>
-EOT;
 
-?>
+<?php close_html(); session_write_close(); ?>

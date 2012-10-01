@@ -16,21 +16,25 @@ include($my_page_defaults);
 
 
 // FUNCTIONS:
-function auth_check() {
+
+function auth_check($alias, $type) {
+
 	if(!isset($_SESSION)) {
-		header("Location: /OpenRPG/index.php");
+		header("Location: $alias/login_manager.php?a=login");
 		exit;
 
 	} else if(!isset($_SESSION['logged_in'])) {
-        $_SESSION['curr_page'] = $_SERVER['REQUEST_URI'];
-		header("Location: /OpenRPG/login_manager.php?a=login");
+		$_SESSION['curr_page'] = $_SERVER['REQUEST_URI'];
+		header("Location: $alias/login_manager.php?a=login");
 
 	} else if(!isset($_SESSION['verified'])) {
-        $_SESSION['curr_page'] = $_SERVER['REQUEST_URI'];
-		header("Location: /OpenRPG/login_manager.php?a=verify");
+		$_SESSION['curr_page'] = $_SERVER['REQUEST_URI'];
+		header("Location: $alias/login_manager.php?a=verify");
+	}
 
-	} else {
-		$user = $_SESSION['user'];
+	// Authorize for admin pages.
+	if($type == "admin" && !isset($_SESSION["admin"])) {
+		header("Location: $alias/index.php");
 	}
 }
 

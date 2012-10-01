@@ -11,6 +11,7 @@ $my_defaults = "my_defaults.php";
 $db_loc = "localhost";
 $db_user = "OpenRPG";
 $db_name = "OpenRPG";
+$db_pass = "";
 $table = "users";
 
 include($my_defaults);

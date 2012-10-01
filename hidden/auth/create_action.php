@@ -1,7 +1,8 @@
 <?php
 	include("defaults.php");
 	include("validate_secure.php");
-	mysql_connect($db_loc, $db_user);
+
+	mysql_connect($db_loc, $db_user, $db_pass);
 	mysql_select_db($db_name);
 
 	$salt = rand_string(16);
