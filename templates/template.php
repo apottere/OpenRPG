@@ -2,7 +2,7 @@
 	include("page_defaults.php");
 	session_name($sess_name); session_start();
 
-	auth_check();
+	auth_check($alias, "user");
 	open_html(NULL);
 	disp_banner("home", $links_loc, $alias);
 ?>
