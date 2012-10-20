@@ -1,1 +1,0 @@
-1. username - varchar(50) not null primary key
