@@ -12,7 +12,7 @@ $salt = substr($salt, 0, 10);
 $subject = "OpenRPG Verification Code";
 $message = "Dear $user,
 
-\tThank you for registering at OpenRPG.  Please enter this code at modelofnothing.no-ip.org/OpenRPG/login_manager.php?a=verify:
+\tThank you for registering at OpenRPG.  Please enter this code at modelofnothing.no-ip.org/OpenRPG/login.php?a=verify:
 
 Your code: $salt
 
@@ -24,8 +24,8 @@ $headers = 'From: OpenRPG@modelofnothing.no-ip.org' . "\r\n";
 mail($email, $subject, $message, $headers);
 
 if(isset($_SESSION['logged_in'])) {
-	$_SESSION['error'] = "Mail sent as requested.";
+	$_SESSION['error'] = "Mail sent as requested, please check your spam folder.";
 	session_write_close();
-	header("Location: login_manager.php?a=verify");
+	header("Location: login.php?a=verify");
 }
 ?>

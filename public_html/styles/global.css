@@ -22,7 +22,8 @@ body {
 	background-image: url('/styles/imgs/dark_wall.png');
 	background-image: url('/styles/imgs/dark_wood.png');
 	*/
-	background-image: url('/OpenRPG_styles/imgs/dark_wall_light.png');
+	
+	background-image: url('imgs/dark_wall_light.png');
 }
 
 h1 {

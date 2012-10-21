@@ -18,31 +18,31 @@
 	if(mysql_num_rows($query) != 0) {
 		$_SESSION['error'] = "Username already taken, please try again.";
 		session_write_close();
-		header("Location: login_manager.php?a=create");
+		header("Location: login.php?a=create");
 		exit;
 		
 	} else if(!validate_username($name)) {
 		$_SESSION['error'] = "Username is invalid, please try again.";
 		session_write_close();
-		header("Location: login_manager.php?a=create");
+		header("Location: login.php?a=create");
 		exit;
 
 	} else if(mysql_num_rows($query2) != 0) {
 		$_SESSION['error'] = "E-mail is already associated with another account, please try again.";
 		session_write_close();
-		header("Location: login_manager.php?a=create");
+		header("Location: login.php?a=create");
 		exit;
 
 	} else if($pass != $pass2) {
 		$_SESSION['error'] = "Passwords did not match, please try again.";
 		session_write_close();
-		header("Location: login_manager.php?a=create");
+		header("Location: login.php?a=create");
 		exit;
 
 	} else if(!check_email_address($email)) {
 		$_SESSION['error'] = "E-mail address is not valid, please try again.";
 		session_write_close();
-		header("Location: login_manager.php?a=create");
+		header("Location: login.php?a=create");
 		exit;
 	
 	} else {
@@ -50,7 +50,7 @@
 		include("$srcdir/auth/email.php");
 		$_SESSION['error'] = "Account created successfully!";
 		session_write_close();
-		header("Location: login_manager.php?a=login");
+		header("Location: login.php?a=login");
 		exit;
 	}
 ?>

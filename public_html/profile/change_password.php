@@ -1,10 +1,10 @@
 <?php
-	include("../page_defaults.php");
+	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	session_name($sess_name); session_start();
-	
-	auth_check($alias, "user");
+
+	auth_check("user");
 	open_html(NULL);
-	disp_banner("profile", $links_loc, $alias);
+	disp_banner("profile");
 
 	$user = $_SESSION['user'];
 	if(isset($_SESSION['error'])) {
@@ -14,7 +14,7 @@
 	}
 ?>
 
-<form method="POST" action="../login_manager.php">
+<form method="POST" action="../login.php">
 	<table class="noborder">
 	<tr>
 		<td><p>Username: </p></td>

@@ -1,10 +1,10 @@
 <?php 
-	include("../page_defaults.php");
+	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	session_name($sess_name); session_start();
 
-	auth_check($alias, "user");
+	auth_check("user");
 	open_html(NULL);
-	disp_banner("battle", $links_loc, $alias);
+	disp_banner("battle");
 ?>
 <h3>Battle page:</h3>
 <p>Battle royale!</p>

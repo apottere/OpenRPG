@@ -1,10 +1,11 @@
 <?php 
-	include("../page_defaults.php");
+	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	session_name($sess_name); session_start();
 
-	auth_check($alias, "user");
+	auth_check("user");
 	open_html(NULL);
-	disp_banner("friends", $links_loc, $alias);
+	disp_banner("friends");
+
 ?>
 <h3>Friends page:</h3>
 <p>Forever alone.</p>

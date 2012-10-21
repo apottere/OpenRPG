@@ -30,6 +30,7 @@ CREATE TABLE `users` (
   `created` datetime NOT NULL,
   `id` varchar(16) NOT NULL,
   `validated` bit(1) NOT NULL,
+  `login_hash` varchar(40),
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
