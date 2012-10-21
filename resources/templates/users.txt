@@ -1,1 +1,23 @@
-1. username - varchar(50) not null primary key
+1. username -	varchar(50) not null primary key:
+	-The user's username.
+
+2. passwd -		varchar(60) not null:
+	-The user's password, hashed.
+
+3. email -		varchar(50) not null:
+	-The user's email address.
+
+4. admin -		bit(1) not null:
+	-A single bit, 1 == admin, 0 == user.
+
+5. created -	datetime not null:
+	-The datetime the account was created.
+
+6. id -			varchar(16) not null:
+	-The user's verification id.
+
+7. validated -	bit(1) not null:
+	-A single bit, 1 == email has been validated, 0 otherwise.
+
+8. login_hash -	varchar(40):
+	-The user's most recent login id.
