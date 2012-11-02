@@ -10,7 +10,7 @@ $local_config = "local_config.php";
 
 // VARIABLES:
 
-$auth_config = "/auth_config.php";
+$modules_dir = "/modules";
 $alias = "/OpenRPG";	// Apache alias.
 $stylesheet = "$alias/styles/global.css";	//Stylesheet location.
 $sess_name = "OpenRPG";		// PHP session name.
@@ -22,11 +22,13 @@ $blinks = array(
 	"admin" => array("Admin Page", "/admin/admin.php"),
 	);
 
+
+$modules = array(
+	"auth" => (dirname(__FILE__) . $modules_dir . "/auth/auth_config.php"),
+);
+
 if(file_exists($local_config)) {
 	include($local_config);
-}
-if(file_exists(realpath(dirname(__FILE__) . $auth_config))) {
-	include(realpath(dirname(__FILE__) . $auth_config));
 }
 
 // FUNCTIONS:
@@ -50,7 +52,7 @@ EOT;
 function disp_banner($p) {
 	global $blinks, $alias;
 
-	$user = $_SESSION['user'];
+	$user = $_SESSION['user']->name;
 	$prct = round((100/count($blinks)), 1);
 	echo <<<EOT
 			<table width=100%>
@@ -72,7 +74,7 @@ function disp_banner($p) {
 			<table width="100%" class="nav">
 			<tr>
 EOT;
-	if(!isset($_SESSION['admin'])) {
+	if($_SESSION['user']->admin != 1) {
 		unset($blinks['admin']);
 	}
 

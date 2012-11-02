@@ -1,8 +1,10 @@
 <?php 
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
+	include($modules['auth']);
 	session_name($sess_name); session_start();
 
 	auth_check("user");
+
 	open_html(NULL);
 	disp_banner("profile");
 
