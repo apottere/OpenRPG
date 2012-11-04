@@ -9,15 +9,15 @@
 	disp_banner("profile");
 
 
-$user = $_SESSION['user'];
-$email = $_SESSION['email'];
-$datetime = date('g\:i\:s a \o\n F j\, Y' , strtotime($_SESSION['datetime']));
+$user = $_SESSION['user']->name;
+$email = $_SESSION['user']->email;
+$datetime = date('g\:i\:s a \o\n F j\, Y' , strtotime($_SESSION['user']->dob));
 $managerdir = "..";
 
-echo "<h1>Welcome to your account management page!</h1>";
 
+$error = "";
 if(isset($_SESSION['error'])) {
-	echo '<p style="color:RED;">' . $_SESSION['error'] . '</p>';
+	$error = '<p style="color:RED;">' . $_SESSION['error'] . '</p>';
 	unset($_SESSION['error']);
 }
 
@@ -26,7 +26,10 @@ if(isset($_SESSION['admin'])) {
 } else {
 	$type = "User";
 }
+
 echo <<<EOT
+<h1>Welcome to your account management page!</h1>
+$error
 <table>
 <tr>
 	<td><p>Account: </p></td><td><p style="margin-left:7px">$type</p></td>

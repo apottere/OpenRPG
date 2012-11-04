@@ -1,7 +1,7 @@
 <?php
 function logout() {
 	header("Refresh: 5; url=/");
-	unset($_SESSION['logged_in']);
+	unset($_SESSION['user']);
 	session_unset();
 	session_write_close();
 	echo <<<EOT

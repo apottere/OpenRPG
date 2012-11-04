@@ -1,5 +1,7 @@
 <?php
-	unset($_SESSION['logged_in']);
+function timeout() {
+	global $alias;
+	unset($_SESSION['user']);
 	session_unset();
 	session_write_close();
 	echo <<<EOT
@@ -9,4 +11,5 @@
 	<p>Return to the <a href="/">homepage</a> or <a href="$alias/login.php?a=login">login</a>.</p>
 	</div>
 EOT;
+}
 ?>

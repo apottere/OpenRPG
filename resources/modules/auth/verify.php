@@ -1,10 +1,14 @@
 <?php
 function verify() {
+
 	if(isset($_POST['verify'])) {
-		mysql_connect($db_loc, $db_user);
-		mysql_select_db($db_name);
-			
-		$user = $_SESSION['user'];
+		global $auth_conf;
+
+		mysql_connect($auth_conf['db_loc'], $auth_conf['db_user']);
+		mysql_select_db($auth_conf['db_name']);
+
+		$table = $auth_conf['table'];
+		$user = $_SESSION['user']->name;
 		$id = plain_escape($_POST['id']);
 
 		$salt = mysql_fetch_array(mysql_query("select id from $table where username='$user';"))[0];
@@ -12,27 +16,17 @@ function verify() {
 
 		if($id != $salt) {
 			$_SESSION['error'] = "Incorrect code, please try again.";
-			session_write_close();
-			header("Location: login_manager?a=verify");
-			exit;
+			return "error";
+
 		} else {
-			mysql_query("update $table set validated=1 where username='$user';");
-			$_SESSION['verified'] = "true";
-			if(isset($_SESSION['curr_page'])) {
-				$page = $_SESSION['curr_page'];
-				unset($_SESSION['curr_page']);
-				session_write_close();
-				header("Location: $page");
-				exit;
-			} else {
-				session_write_close();
-				header("Location: index.php");
-				exit;
-			}
+			mysql_query("update $table set verified=1 where username='$user';");
+			$_SESSION['user']->verified = 1;
+			return "success";
 		}
 
 	} else {
 
+		$error="";
 		if(isset($_SESSION['error'])) {
 			$error = '<p style="color:RED;">' . $_SESSION['error'] . "</p>";
 			unset($_SESSION['error']);
@@ -66,7 +60,7 @@ function verify() {
 		</table>
 		</div>
 
-	EOT;
+EOT;
 	}
 }
 ?>

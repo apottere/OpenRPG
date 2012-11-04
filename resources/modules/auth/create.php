@@ -10,8 +10,8 @@ function create() {
 
 		$salt = rand_string(16);
 		$name = plain_escape($_POST["username"]);
-		$pass = hash_pass(htmlspecialchars($_POST["password"]), $salt);
-		$pass2 = hash_pass(htmlspecialchars($_POST["password2"]), $salt);
+		$pass = hash_pass(plain_escape($_POST["password"]), $salt);
+		$pass2 = hash_pass(plain_escape($_POST["password2"]), $salt);
 		$email = plain_escape($_POST['email']);
 
 		$query = mysql_query("select username from $table where username='$name';");
@@ -39,7 +39,7 @@ function create() {
 			return "error";
 		
 		} else {
-			mysql_query("insert into $table (username, passwd, email, admin, created, id, validated) values('$name', '$pass', '$email', 0, now(), '$salt', 0);");
+			mysql_query("insert into $table (username, passwd, email, admin, created, id, verified) values('$name', '$pass', '$email', 0, now(), '$salt', 0);");
 			$_SESSION['error'] = "Account created successfully!";
 			return array($name, $email, $salt);
 		}

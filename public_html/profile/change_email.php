@@ -1,30 +1,54 @@
 <?php
-	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
-	session_name($sess_name); session_start();
 
-	auth_check("user");
+include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
+include($modules['auth']);
+session_name($sess_name); session_start();
+
+auth_check("user");
+
+if(isset($_POST['changeemail'])) {
+	
+	$res = Manager::change_email();
+	if($res == "error") {
+		header("Location: change_email.php");
+	
+	} else {
+		$_SESSION['user']->email = $res;
+		$_SESSION['user']->verified = 0;
+
+		Manager::email($_SESSION['user']->name, $_SESSION['user']->email, $_SESSION['user']->id, FALSE); 
+		header("Location: profile.php");
+	}
+
+} else if(isset($_POST['cancelchange'])) {
+	header("Location: profile.php");
+} else {
+
 	open_html(NULL);
 	disp_banner("profile");
 
-?>
+	$user = $_SESSION['user']->name;
+	$email = $_SESSION['user']->email;
+	$error = "";
+	if(isset($_SESSION['error'])) {
+		$error = '<p style="color:RED;">' . $_SESSION['error'] . '</p>';
+		unset($_SESSION['error']);
+	}
+	echo <<<EOT
 
 <h1>
 	Change your e-mail here.
 </h1>
-
-<?php
-	$user = $_SESSION['user'];
-	if(isset($_SESSION['error'])) {
-		echo '<p style="color:RED;">' . $_SESSION['error'] . '</p>';
-		unset($_SESSION['error']);
-		session_write_close();
-	}
-?>
-<form method="POST" action="../login.php">
+$error
+<form method="POST">
 	<table class="noborder">
 	<tr>
 		<td><p>Username: </p></td>
-		<td><p><?php echo $user; ?></p></td>
+		<td><p>$user</p></td>
+	</tr>
+	<tr>
+		<td><p>Current E-mail: </p></td>
+		<td><p>$email</p></td>
 	</tr>
 	<tr>
 		<td><p>Password: </p></td>
@@ -40,5 +64,11 @@
 	</tr>
 	</table>
 </form>
+EOT;
 
-<?php close_html(); session_write_close(); ?>
+	close_html();
+}
+
+session_write_close();
+
+?>

@@ -12,7 +12,7 @@ function login() {
 		$name = plain_escape($_POST["username"]);
 		$query = mysql_query("select id from $table where username='$name';");
 		$salt = mysql_fetch_array($query)[0];
-		$pass = hash_pass($_POST["password"], $salt);
+		$pass = hash_pass(plain_escape($_POST["password"]), $salt);
 		$query = mysql_query("select * from $table where username='$name' and passwd='$pass';");
 
 		if(mysql_num_rows($query) == 0) {
@@ -40,7 +40,7 @@ function login() {
 		<h1 align="center">
 			This page requires authentication!
 		</h1>
-		<p align="center">If you have already registered, please log in.  If not, <a href="login.php?a=create">create an account</a> or go back to <a href="/">the homepage</a></p>
+		<p align="center">If you have already registered, please log in.  If not, <a href="login.php?a=create">create an account</a> or go back to <a href="/">the homepage</a>.</p>
 		$error
 		<br />
 		<table class="noborder" align="center">

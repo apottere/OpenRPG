@@ -32,6 +32,10 @@ h1 {
       font-size:20px;
 }
 
+h1.center {
+	text-align: center;
+}
+
 h2 {
       color:#2a2a2a; 
       font-family:Arial; 
@@ -87,6 +91,13 @@ div.main {
 	padding-top: 15px;
 }
 
+div.center {
+	width: 100%;
+	margin-left: 0px auto;
+	margin-right: 0px auto;
+
+}
+
 textarea {
 	border: 1px solid #2a2a2a;
 	color:#2a2a2a;
@@ -139,6 +150,11 @@ td.selected {
 a.nav {
     text-decoration:none;
     font-size:13px;
+}
+
+a.small {
+      font-family:Arial; 
+      font-size:13px;
 }
 
 p.banner {

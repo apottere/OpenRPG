@@ -1,5 +1,7 @@
 <?php
-	unset($_SESSION['logged_in']);
+function quick_logout() {
+	unset($_SESSION['user']);
 	session_unset();
 	session_write_close();
+}
 ?>

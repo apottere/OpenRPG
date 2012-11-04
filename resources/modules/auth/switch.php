@@ -1,7 +1,7 @@
 <?php
 function switch_user() {
 	header("Refresh: 3; url=login.php?a=login");
-	unset($_SESSION['logged_in']);
+	unset($_SESSION['user']);
 	session_unset();
 	session_write_close();
 	echo <<<EOT

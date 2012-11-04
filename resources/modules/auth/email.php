@@ -1,5 +1,5 @@
 <?php
-function mail($user, $email, $salt) {
+function email($user, $email, $salt, $msg) {
 
 	$salt = substr($salt, 0, 10);
 	$subject = "OpenRPG Verification Code";
@@ -16,7 +16,7 @@ function mail($user, $email, $salt) {
 
 	mail($email, $subject, $message, $headers);
 
-	if(isset($_SESSION['logged_in'])) {
+	if($msg) {
 		$_SESSION['error'] = "Mail sent as requested, please check your spam folder.";
 	}
 }

@@ -11,4 +11,5 @@
 ?>
 <h3>This is the admin page!</h3>
 <p>You must be special.  Whoop de doo.</p>
+<a href="users.php">List of users.</a>
 <?php close_html() ?>
