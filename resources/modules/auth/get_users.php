@@ -12,7 +12,7 @@ function get_users($pattern) {
 	$table = $auth_conf['table'];
 
 	$pattern = plain_escape($pattern);
-	$result = mysql_query("select username, email, admin, created, id, verified from users where username rlike '$pattern';");
+	$result = mysql_query("select * from users where username rlike '$pattern';");
 	$users = array();
 	
 	if($result != FALSE) {

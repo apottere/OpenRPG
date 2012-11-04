@@ -108,5 +108,12 @@ class Manager
 		include($auth_conf['authdir'] . "/get_users.php");
 		return get_users($pattern);
 	}
+
+	public static function delete_user($name) {
+
+		global $auth_conf;
+		include($auth_conf['authdir'] . "/delete_user.php");
+		return delete_user($name);
+	}
 }
 ?>

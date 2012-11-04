@@ -33,6 +33,10 @@ if(file_exists($local_config)) {
 
 // FUNCTIONS:
 
+function plain_escape($str) {
+	return mysql_real_escape_string(htmlspecialchars($str));
+}
+
 function open_html($add) {
 	global $stylesheet;
 
