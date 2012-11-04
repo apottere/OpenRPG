@@ -17,7 +17,7 @@ function get_users($pattern) {
 	
 	if($result != FALSE) {
 		while($row = mysql_fetch_array($result)) {
-			array_push($users, $row);
+			array_push($users, new User($row));
 		}
 	}
 
