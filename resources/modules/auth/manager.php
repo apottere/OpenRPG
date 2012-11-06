@@ -115,5 +115,12 @@ class Manager
 		include($auth_conf['authdir'] . "/delete_user.php");
 		return delete_user($name);
 	}
+
+	public static function toggle_admin($username, $adminval) {
+
+		global $auth_conf;
+		include($auth_conf['authdir'] . "/toggle_admin.php");
+		return toggle_admin($username, $adminval);
+	}
 }
 ?>
