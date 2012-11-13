@@ -8,7 +8,7 @@ auth_check("user");
 
 if(isset($_POST['changepassword'])) {
 
-	$res = Manager::change_password();
+	$res = M_Login::change_password();
 	if($res == "error") {
 		header("Location: change_password.php");
 	

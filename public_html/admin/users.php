@@ -14,12 +14,12 @@
 		
 	} else if(isset($_POST['confirmdelete'])) {
 		$name = plain_escape($_POST['name']);
-		Manager::delete_user($name);
+		M_Login::delete_user($name);
 
 	} else if(isset($_POST['toggle'])) {
 		$adminval= plain_escape($_POST['adminval']);
 		$name = plain_escape($_POST['name']);
-		Manager::toggle_admin($name, $adminval);
+		M_Login::toggle_admin($name, $adminval);
 		mysql_error();
 	}
 
@@ -58,7 +58,7 @@ function echo_users() {
 		header("Location: users.php?p=");
 		exit;
 	}
-	$users = Manager::get_users($pattern);
+	$users = M_Login::get_users($pattern);
 	$len = count($users);
 	if($len > 0) {
 		for($i = 0; $i < $len; $i++) {

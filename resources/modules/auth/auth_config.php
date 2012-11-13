@@ -21,8 +21,9 @@ if(file_exists($local_auth_config)) {
 	include($local_auth_config);
 }
 
-include("manager.php");
-include("user.php");
+include("M_Login.php");
+include("User.php");
+include("O_Login.php");
 
 function auth_check($type) {
 	global $alias, $auth_conf;

@@ -16,8 +16,8 @@
 6. id -			varchar(16) not null:
 	-The user's verification id.
 
-7. validated -	bit(1) not null:
+7. verified -	bit(1) not null:
 	-A single bit, 1 == email has been validated, 0 otherwise.
 
 8. login_hash -	varchar(40):
-	-The user's most recent login id.
+	-The user's most recent login hash.

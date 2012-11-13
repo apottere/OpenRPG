@@ -1,19 +1,16 @@
 <?php
 
-class Manager
+class M_Login
 {
 
-	public static function login() {
-		if(isset($_POST['cancellogin'])) {
-			return "cancel";
-		}
+	public static function login($username, $password) {
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/login.php");
 		return login();
 	}
-	
+
 	public static function logout() {
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/logout.php");

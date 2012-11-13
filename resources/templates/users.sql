@@ -29,7 +29,7 @@ CREATE TABLE `users` (
   `admin` bit(1) NOT NULL,
   `created` datetime NOT NULL,
   `id` varchar(16) NOT NULL,
-  `validated` bit(1) NOT NULL,
+  `verified` bit(1) NOT NULL,
   `login_hash` varchar(40),
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
