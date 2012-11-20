@@ -45,10 +45,11 @@ function auth_check($type) {
 
 	mysql_connect($auth_conf['db_loc'], $auth_conf['db_user'], $auth_conf['db_pass']);
 	mysql_select_db($auth_conf['db_name']);
+	$table = $auth_conf['table'];
 
 	$hash = $_SESSION['user']->login_hash;
 	$user = $_SESSION['user']->name;
-	$query = mysql_query("select login_hash from users where login_hash='$hash' and username='$user';");
+	$query = mysql_query("select login_hash from $table where login_hash='$hash' and username='$user';");
 	if(mysql_num_rows($query) == 0) {
 		header("Location: $alias/login.php?a=timeout");
 	}

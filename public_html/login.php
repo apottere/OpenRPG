@@ -1,9 +1,12 @@
 <?php 
 
+// Init page.
 include(realpath(dirname(__FILE__) . "/../resources/config.php"));
 include($modules['auth']);
 session_name($sess_name); session_start();
+$srcdir = "./login";
 
+// Check if a user is logged in.
 function logged_in() {
 	if(isset($_SESSION['user'])) {
 		return TRUE;
@@ -12,28 +15,43 @@ function logged_in() {
 	}
 }
 
+// Check for url argument.
 if(isset($_GET['a'])) {
+
+	// Get variable, open html, and switch on it.
 	$a = $_GET['a'];
 	open_html(NULL);
 
 	switch($a) {
+
 		case "login":
+
+			// Check for logged in.
 			if(logged_in()) {
 				header("Location: $alias/login.php?a=logged_in");
 
 			} else {
 
+				// Otherwise check POST data.
 				if(isset($_POST['cancellogin'])) {
+					
+					// Cancel log in, return to home.
 					header("Location: /");
 
 				} else if(isset($_POST['login'])) {
-					$res = M_Login::login();
 
+					// Get POST credentials and log in.
+					$res = M_Login::login($_POST['username'], $_POST['password']);
+					// Test return code.
 					if($res->code == "error") {
+
+						// Error, return to login.
+						$_SESSION['error'] = $res->value;
 						header("Location: $alias/login.php?a=login");
 
-					} else if($res->code == "success")) {
+					} else if($res->code == "success") {
 
+						// Success, log user in and return to desired page.
 						$_SESSION['user'] = $res->value;
 							
 						$page = "$alias/index.php";
@@ -48,121 +66,185 @@ if(isset($_GET['a'])) {
 
 				} else {
 
+					// Else display login page.
+					$error = "";
 					if(isset($_SESSION['error'])) {
-						M_Login()::login($_SESSION['error']);
-
-					} else {
-						M_Login()::login();
+						$error = $_SESSION['error'];
+						unset($_SESSION['error']);
 					}
+					include("$srcdir/login.php");
 				}
 			}
 			
-			break;
+			break; // End login.
 
 		case "logout":
+
+			// Check for logged in.
 			if(!logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=invalid");
+
 			} else {
+
+				// Else log user out.
 				M_Login::logout();
+				header("Refresh: 5; url=/");
+				unset($_SESSION['user']);
+				session_unset();
+				include("$srcdir/logout.php");
 			}
-			break;
+
+			break; // End logout.
 
 		case "switch":
+
+			// Check for logged in.
 			if(!logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=invalid");
+
 			} else {
-				M_Login::switch_user();
+				
+				// Otherwise switch user.
+				M_Login::logout();
+				header("Refresh: 3; url=login.php?a=login");
+				unset($_SESSION['user']);
+				session_unset();
+				include("$srcdir/switch.php");
 			}
-			break;
+
+			break; // End switch.
 
 		case "create":
+
+			// Check for logged in.
 			if(logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=logged_in");
+
 			} else {
-				$res = M_Login::create();
-				if($res == "error") {
-					session_write_close();
-					header("Location: $alias/login.php?a=create");
-				} else if($res == "cancel") {
-					session_write_close();
+
+				// Check for POST data.
+				if(isset($_POST['cancelcreate'])) {
+
+					// Return to login.
 					header("Location: $alias/login.php?a=login");
-				} else if($res != null) {
-					M_Login::email($res[0], $res[1], $res[2], FALSE);
-					session_write_close();
-					header("Location: $alias/login.php?a=login");
+
+				} else if(isset($_POST['create'])) {
+
+					// Create account.
+					$res = M_Login::create($_POST['username'], $_POST['password'], $_POST['password2'], $_POST['email'], $_POST['email2']);
+
+					// Check return code.
+					if($res->code == "error") {
+
+						// Return to create.
+						$_SESSION['error'] = $res->value;
+						header("Location: $alias/login.php?a=create");
+
+					} else if($res->code == "success") {
+						
+						// Email and return to login.
+						$_SESSION['error'] = "Account created successfully.";
+						M_Login::email($res->value[0], $res->value[1], $res->value[2], FALSE);
+						header("Location: $alias/login.php?a=login");
+
+					}
+
+				} else {
+					
+					// Else return create page.
+					$error = "";
+					if(isset($_SESSION['error'])) {
+						$error = $_SESSION['error'];
+						unset($_SESSION['error']);
+					}
+					include("$srcdir/create.php");
+
 				}
 			}
-			break;
+
+			break; // End create.
 
 		case "verify":
+			
+			// Check logged in.
 			if(!logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=invalid");
+
 			} else {
-				$res = M_Login::verify();
 
-				if($res == "error") {
-					session_write_close();
-					header("Location: $alias/login.php?a=verify");
-				} else if($res == "cancel") {
-					M_Login::quick_logout();
-					session_write_close();
+				// Check POST data.
+				if(isset($_POST['cancelverify'])) {
+
+					// Logout and return to login.
+					M_Login::logout();
+					unset($_SESSION['user']);
+					session_unset();
 					header("Location: $alias/login.php?a=login");
-				} else if($res == "email") {
-					M_Login::email($_SESSION['user']->name, $_SESSION['user']->email, $_SESSION['user']->id, TRUE);
-					session_write_close();
+
+				} else if(isset($_POST['requestemail'])) {
+
+					// Send email and return.
+					M_Login::email($_SESSION['user']->name, $_SESSION['user']->email, $_SESSION['user']->id);
+					$_SESSION['error'] = "Email sent as requested.";
 					header("Location: $alias/login.php?a=verify");
 
 
-				} else if($res == "success") {
 
-					$page = "$alias/index.php";
-					if(isset($_SESSION['curr_page'])) {
-						$page = $_SESSION['curr_page'];
-						unset($_SESSION['curr_page']);
+				} else if(isset($_POST['verify'])) {
+
+					// Verify user.
+					$res = M_Login::verify($_POST['id']);
+
+					// Check return code.
+					if($res->code == "error") {
+
+						// Return to verify.
+						$res->value = $_SESSION['error'];
+						header("Location: $alias/login.php?a=verify");
+
+					} else if($res == "email") {
+					} else if($res == "success") {
+
+						$page = "$alias/index.php";
+						if(isset($_SESSION['curr_page'])) {
+							$page = $_SESSION['curr_page'];
+							unset($_SESSION['curr_page']);
+						}
+						header("Location: $page");
+
 					}
-					session_write_close();
-					header("Location: $page");
-
 				}
 			}
 			break;
 
 		case "timeout":
 			if(!logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=invalid");
+
 			} else {
 				M_Login::timeout();
-				session_write_close();
 			}
 			break;
 
 		case "logged_in":
 			if(!logged_in()) {
-				session_write_close();
 				header("Location: $alias/login.php?a=invalid");
 			} else {
 				M_Login::logged_in();
-				session_write_close();
 			}
 			break;
 			
 		default:
 			M_Login::invalid();
-			session_write_close();
 			break;
 	}
 
 	close_html();
-	session_write_close();
 
 } else {
-	session_write_close();
 	header("Location: $alias/login.php?a=login");
 }
+
+session_write_close();
 
 ?>

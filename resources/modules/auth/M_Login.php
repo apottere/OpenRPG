@@ -8,7 +8,7 @@ class M_Login
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/login.php");
-		return login();
+		return login($username, $password);
 	}
 
 	public static function logout() {
@@ -17,22 +17,12 @@ class M_Login
 		return logout();
 	}
 	
-	public static function switch_user() {
-		global $auth_conf;
-		include($auth_conf['authdir'] . "/switch.php");
-		return switch_user();
-	}
-
-	
-	public static function create() {
-		if(isset($_POST['cancelcreate'])) {
-			return "cancel";
-		}
+	public static function create($username, $password, $password2, $email, $email2) {
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/create.php");
-		return create();
+		return create($username, $password, $password2, $email, $email2);
 	}
 
 	public static function email($name, $email, $id, $msg) {
@@ -42,11 +32,6 @@ class M_Login
 	}
 
 	public static function verify() {
-		if(isset($_POST['cancelverify'])) {
-			return "cancel";
-		} else if(isset($_POST['requestemail'])) {
-			return "email";
-		}
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
@@ -59,13 +44,6 @@ class M_Login
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/timeout.php");
 		return timeout();
-	}
-
-	public static function quick_logout() {
-
-		global $auth_conf;
-		include($auth_conf['authdir'] . "/quick_logout.php");
-		return quick_logout();
 	}
 
 	public static function invalid() {
