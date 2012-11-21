@@ -4,11 +4,20 @@
 include(realpath(dirname(__FILE__) . "/../resources/config.php"));
 include($modules['auth']);
 session_name($sess_name); session_start();
-$srcdir = "./login";
+$srcdir = $pages['login'];
 
 // Check if a user is logged in.
 function logged_in() {
 	if(isset($_SESSION['user'])) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+// Checks if user is verified.
+function verified() {
+	if($_SESSION['user']->verified) {
 		return TRUE;
 	} else {
 		return FALSE;
@@ -28,7 +37,7 @@ if(isset($_GET['a'])) {
 
 			// Check for logged in.
 			if(logged_in()) {
-				header("Location: $alias/login.php?a=logged_in");
+				header("Location: $alias/login.php?a=invalid");
 
 			} else {
 
@@ -118,7 +127,7 @@ if(isset($_GET['a'])) {
 
 			// Check for logged in.
 			if(logged_in()) {
-				header("Location: $alias/login.php?a=logged_in");
+				header("Location: $alias/login.php?a=invalid");
 
 			} else {
 
@@ -143,8 +152,8 @@ if(isset($_GET['a'])) {
 					} else if($res->code == "success") {
 						
 						// Email and return to login.
+						M_Login::email($res->value[0], $res->value[1], $res->value[2]);
 						$_SESSION['error'] = "Account created successfully.";
-						M_Login::email($res->value[0], $res->value[1], $res->value[2], FALSE);
 						header("Location: $alias/login.php?a=login");
 
 					}
@@ -167,7 +176,7 @@ if(isset($_GET['a'])) {
 		case "verify":
 			
 			// Check logged in.
-			if(!logged_in()) {
+			if(!logged_in() || verified()) {
 				header("Location: $alias/login.php?a=invalid");
 
 			} else {
@@ -185,25 +194,25 @@ if(isset($_GET['a'])) {
 
 					// Send email and return.
 					M_Login::email($_SESSION['user']->name, $_SESSION['user']->email, $_SESSION['user']->id);
-					$_SESSION['error'] = "Email sent as requested.";
+					$_SESSION['error'] = "E-mail sent as requested.";
 					header("Location: $alias/login.php?a=verify");
-
-
 
 				} else if(isset($_POST['verify'])) {
 
 					// Verify user.
-					$res = M_Login::verify($_POST['id']);
+					$res = M_Login::verify($_SESSION['user']->name, $_POST['id']);
 
 					// Check return code.
 					if($res->code == "error") {
 
 						// Return to verify.
-						$res->value = $_SESSION['error'];
+						$_SESSION['error'] = $res->value;
 						header("Location: $alias/login.php?a=verify");
 
-					} else if($res == "email") {
-					} else if($res == "success") {
+					} else if($res->code == "success") {
+						
+						// Success and proceed to site.
+						$_SESSION['user']->verified = 1;
 
 						$page = "$alias/index.php";
 						if(isset($_SESSION['curr_page'])) {
@@ -211,37 +220,67 @@ if(isset($_GET['a'])) {
 							unset($_SESSION['curr_page']);
 						}
 						header("Location: $page");
-
 					}
+
+				} else {
+				
+					// Display page.
+					$error = "";
+					if(isset($_SESSION['error'])) {
+						$error = $_SESSION['error'];
+						unset($_SESSION['error']);
+					}
+					include("$srcdir/verify.php");
 				}
 			}
-			break;
+
+			break; // End verify.
 
 		case "timeout":
+
+			// Check logged in.
 			if(!logged_in()) {
 				header("Location: $alias/login.php?a=invalid");
 
 			} else {
-				M_Login::timeout();
-			}
-			break;
 
-		case "logged_in":
-			if(!logged_in()) {
-				header("Location: $alias/login.php?a=invalid");
-			} else {
-				M_Login::logged_in();
+				// Logout.
+				unset($_SESSION['user']);
+				session_unset();
+				
+				// Display page.
+				include("$srcdir/timeout.php");
+
 			}
-			break;
-			
+
+			break; // End timeout.
+
 		default:
-			M_Login::invalid();
-			break;
+			
+			// Test logged in.
+			if(logged_in()) {
+				
+				// Return to OpenRPG home.
+				header("Refresh: 3; url=$alias");
+
+				// Display page.
+				include("$srcdir/invalid.php");
+
+			} else {
+
+				// Return to login.
+				header("Refresh: 3; url=login.php?a=login");
+			}
+
+			break; // End default.
 	}
 
+	// Clost HTML tags.
 	close_html();
 
 } else {
+
+	// Go to login.
 	header("Location: $alias/login.php?a=login");
 }
 

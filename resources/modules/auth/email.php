@@ -1,6 +1,7 @@
 <?php
-function email($user, $email, $salt, $msg) {
+function email($user, $email, $salt) {
 
+	// Get required variables.
 	$salt = substr($salt, 0, 10);
 	$subject = "OpenRPG Verification Code";
 	$message = "Dear $user,
@@ -11,13 +12,12 @@ function email($user, $email, $salt, $msg) {
 
 	Have a nice day!";
 
+	// Wrap the message and add headers.
 	$message = wordwrap($message, 70);
 	$headers = 'From: OpenRPG@modelofnothing.no-ip.org' . "\r\n";
 
+	// Send mail.
 	mail($email, $subject, $message, $headers);
 
-	if($msg) {
-		$_SESSION['error'] = "Mail sent as requested, please check your spam folder.";
-	}
 }
 ?>

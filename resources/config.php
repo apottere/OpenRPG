@@ -11,6 +11,7 @@ $local_config = "local_config.php";
 /* VARIABLES: */
 
 $modules_dir = "/modules";					// Module directory.
+$pages_dir = "/pages";
 $alias = "/OpenRPG";						// Apache alias.
 $stylesheet = "$alias/styles/global.css";	// Stylesheet location.
 $sess_name = "OpenRPG";						// PHP session name.
@@ -26,6 +27,13 @@ $modules = array(
 	"auth" => (dirname(__FILE__) . $modules_dir . "/auth/auth_config.php"),
 	"friends" => (dirname(__FILE__) . $modules_dir . "/friends/friends_config.php"),
 	);										// Module array.
+
+$pages = array(
+	"login" => (dirname(__FILE__) . $pages_dir . "/login"),
+	"home" => (dirname(__FILE__) . $pages_dir . "/home"),
+	"profile" => (dirname(__FILE__) . $pages_dir . "/profile"),
+	);
+
 
 // Include local config overrides.
 if(file_exists($local_config)) {

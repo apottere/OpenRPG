@@ -17,7 +17,7 @@ $auth_conf = array(
 	"table" => "users",
 );
 
-if(file_exists($local_auth_config)) {
+if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_auth_config)) {
 	include($local_auth_config);
 }
 

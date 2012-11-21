@@ -4,7 +4,7 @@
 	Create a username here.
 </h1>
 <p>Please enter your e-mail address and your desired username and password.</p>
-<p style="color:RED;"><?php echo $error ?></p>
+<p class="error"><?php echo $error?></p>
 <br />
 <form method="POST" action="login.php?a=create">
 	<table class="noborder" align="center">

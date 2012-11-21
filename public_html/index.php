@@ -1,13 +1,25 @@
 <?php 
+
+	// Include default config and needed modules.
 	include(realpath(dirname(__FILE__) . "/../resources/config.php"));
 	include($modules['auth']);
 	session_name($sess_name); session_start();
 
+	// Check the user has authenticated.
 	auth_check("user");
 
+	// Open HTML tags and display banner.
 	open_html(NULL);
 	disp_banner("home");
+
+	// Set variables.
+	$srcdir = $pages['home'];
+
+	// Diplay page.
+	include("$srcdir/home.php");
+
+	// Close HTML and session.
+	close_html();
+	session_write_close();
+
 ?>
-<h3>This is the home page!</h3>
-<p>Here's the ORPG.  Tada.</p>
-<?php close_html(); session_write_close(); ?>

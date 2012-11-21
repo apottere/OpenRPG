@@ -10,16 +10,16 @@
 
 	// Handle POST data.
 	if(isset($_POST['changeemail'])) {
+
 		// Change email submitted.
-		
-		// Call login manager function.
-		$res = M_Login::change_email();
+		$res = M_Login::change_email($_POST['password'], $_POST['newemail']);
 
 		// Handle result.
 		if($res == "error") {
 			header("Location: change_email.php");
 		
 		} else {
+		$_SESSION['error'] = "E-mail updated successfully!";
 			$_SESSION['user']->email = $res;
 			$_SESSION['user']->verified = 0;
 

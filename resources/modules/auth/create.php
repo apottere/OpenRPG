@@ -33,6 +33,8 @@ function create($username, $password, $password2, $email, $email2) {
 		// Error, username invalid.
 		return new O_Login("error", "Username is invalid, please try again.");
 
+	//TODO Make this work.
+	//} else if(lower($email) != lower($email2)) {
 	} else if($email != $email2) {
 		
 		// Error, email mismatch.

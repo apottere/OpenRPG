@@ -25,47 +25,26 @@ class M_Login
 		return create($username, $password, $password2, $email, $email2);
 	}
 
-	public static function email($name, $email, $id, $msg) {
+	public static function email($name, $email, $id) {
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/email.php");
 		return email($name, $email, $id, $msg);
 	}
 
-	public static function verify() {
+	public static function verify($name, $id) {
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/verify.php");
-		return verify();
+		return verify($name, $id);
 	}
 
-	public static function timeout() {
-
-		global $auth_conf;
-		include($auth_conf['authdir'] . "/timeout.php");
-		return timeout();
-	}
-
-	public static function invalid() {
-
-		global $auth_conf;
-		include($auth_conf['authdir'] . "/invalid.php");
-		return invalid();
-	}
-
-	public static function logged_in() {
-
-		global $auth_conf;
-		include($auth_conf['authdir'] . "/logged_in.php");
-		return logged_in();
-	}
-
-	public static function change_email() {
+	public static function change_email($user, $pass, $salt, $email) {
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/change_email.php");
-		return change_email();
+		return change_email($user, $pass, $salt, $email);
 	}
 
 	public static function change_password() {
