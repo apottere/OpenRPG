@@ -1,12 +1,17 @@
 <?php
 /*
-This is a list of default values, DO NOT EDIT THIS LIST.
-If you want to change a value, copy the value you want to
-change to a new php file, and record the location in the 
-variable below.  Any variables defined there will override 
-their counterparts here.
+	This is a list of default values, DO NOT EDIT THIS LIST.
+	If you want to change a value, copy the value you want to
+	change to a new php file, and record the location in the 
+	variable below.  Any variables defined there will override 
+	their counterparts here.
 */
+
 $local_auth_config = "local_auth_config.php";
+
+/* DO NOT EDIT BELOW THIS LINE */
+################################################################################
+/* VARIABLES: */
 
 $auth_conf = array(
 	"authdir" => realpath(dirname(__FILE__)),
@@ -24,6 +29,9 @@ if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_auth_config)) {
 include("M_Login.php");
 include("User.php");
 include("O_Login.php");
+
+################################################################################
+/* FUNCTIONS: */
 
 function auth_check($type) {
 	global $alias, $auth_conf;

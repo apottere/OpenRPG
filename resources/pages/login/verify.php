@@ -4,7 +4,7 @@
 	Your e-mail address has not been verified yet.
 </h1>
 <p>You should have recieved an e-mail with a verification code.  Insert the code below, or request another e-mail.</p>
-<p class="error"><?php echo $error?></p>
+<p class="error"><?php echo $template['error']; ?></p>
 <br />
 <table class="noborder" align="center">
 <form method="post">

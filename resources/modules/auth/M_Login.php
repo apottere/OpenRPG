@@ -35,7 +35,6 @@ class M_Login
 	public static function verify($name, $id) {
 
 		global $auth_conf;
-		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/verify.php");
 		return verify($name, $id);
 	}
@@ -59,7 +58,6 @@ class M_Login
 	public static function get_users($pattern) {
 
 		global $auth_conf;
-		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/get_users.php");
 		return get_users($pattern);
 	}
@@ -67,7 +65,6 @@ class M_Login
 	public static function delete_user($name) {
 
 		global $auth_conf;
-		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/delete_user.php");
 		return delete_user($name);
 	}
@@ -75,7 +72,6 @@ class M_Login
 	public static function toggle_admin($username, $adminval) {
 
 		global $auth_conf;
-		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/toggle_admin.php");
 		return toggle_admin($username, $adminval);
 	}

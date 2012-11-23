@@ -32,7 +32,7 @@ h1 {
       font-size:20px;
 }
 
-h1.center {
+.center {
 	text-align: center;
 }
 
@@ -111,6 +111,15 @@ img {
      border:solid 1px #2a2a2a;
 }
 
+iframe.404 {
+
+	display: block;
+	width: 420px;
+	height: 315px;
+	margin: 0 auto;
+	border: 0;
+
+}
 
 .border1, .border1 tr, .border1 th, .border1 td
 {

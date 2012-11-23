@@ -26,12 +26,19 @@
 	} else {
 		$type = "User";
 	}
-?>
 
 
-<?php 
+	// Added for url referencing (friends list compatibility).
+	if(isset($_POST['LookUp'])) {
+		$user = plain_escape($_POST['user']);
+		header("Location: profile_look.php?user=$user");
+		session_write_close();
+		exit;
+	}
 
-	$user = $_POST['user'];
+	$user = plain_escape($_GET['user']);
+	// End changes made.
+
 	mysql_connect($auth_conf['db_loc'], $auth_conf['db_user'], $auth_conf['db_pass']);
         mysql_select_db($auth_conf['db_name']);
 

@@ -76,9 +76,9 @@ if(isset($_GET['a'])) {
 				} else {
 
 					// Else display login page.
-					$error = "";
+					$template['error'] = "";
 					if(isset($_SESSION['error'])) {
-						$error = $_SESSION['error'];
+						$template['error'] = $_SESSION['error'];
 						unset($_SESSION['error']);
 					}
 					include("$srcdir/login.php");
@@ -161,9 +161,9 @@ if(isset($_GET['a'])) {
 				} else {
 					
 					// Else return create page.
-					$error = "";
+					$template['error'] = "";
 					if(isset($_SESSION['error'])) {
-						$error = $_SESSION['error'];
+						$template['error'] = $_SESSION['error'];
 						unset($_SESSION['error']);
 					}
 					include("$srcdir/create.php");
@@ -225,9 +225,9 @@ if(isset($_GET['a'])) {
 				} else {
 				
 					// Display page.
-					$error = "";
+					$template['error'] = "";
 					if(isset($_SESSION['error'])) {
-						$error = $_SESSION['error'];
+						$template['error'] = $_SESSION['error'];
 						unset($_SESSION['error']);
 					}
 					include("$srcdir/verify.php");

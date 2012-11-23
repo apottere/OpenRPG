@@ -11,4 +11,5 @@
 ?>
 <h3>Friends page:</h3>
 <p>Forever alone.</p>
+<a href="list.php">Friends list.</a>
 <?php close_html(); session_write_close(); ?>
