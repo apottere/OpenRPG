@@ -1,44 +1,73 @@
 <?php 
+
+	// Init page.
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
 	session_name($sess_name); session_start();
 
+	// Authenticate.
 	auth_check("admin");
 
+	// Check POST data.
 	if(isset($_POST['search'])) {
+		
+		// Get search data and redirect.
 		$pattern = plain_escape($_POST['searchstring']);
 		header("Location: users.php?p=$pattern");
 		session_write_close();
 		exit;
 
-		
 	} else if(isset($_POST['confirmdelete'])) {
-		$name = plain_escape($_POST['name']);
-		M_Login::delete_user($name);
+		
+		// Confirm and delete user from DB.
+		M_Login::delete_user($_POST['name']);
 
 	} else if(isset($_POST['toggle'])) {
-		$adminval= plain_escape($_POST['adminval']);
-		$name = plain_escape($_POST['name']);
-		M_Login::toggle_admin($name, $adminval);
-		mysql_error();
+		
+		// Toggle admin value for user.
+		M_Login::toggle_admin($_POST['name'], $_POST['adminval']);
 	}
 
-function display_confirm() {
+	// Get page variables.
+	$template['links'] = get_links();
+	$template['confirm'] = get_confirm();
+	$template['users'] = get_user_list();
 
+	// Open HTML and display banner.
+	open_html(NULL);
+	disp_banner("admin");
+
+	// Display page.
+	include($pages['admin'] . "/users.php");
+
+	// Close HTML tags.
+	close_html();
+
+
+// FUNCTIONS:
+
+// Gets the optional confirm delete dialogue.
+function get_confirm() {
+
+	$return = "";
 	if(isset($_POST['delete'])) {
 		$username = plain_escape($_POST['name']);
-		echo "<div style=\"text-align: center;\">";
-		echo "<h1>Confirm account deletion!</h1>";
-		echo "<p style=\"color: red;\">Delete \"$username\" permanently?</p>";
-		echo "<form method=\"POST\"><input type=\"submit\" name=\"confirmdelete\" value=\"Yes\" />";
-		echo "<input type=\"hidden\" name=\"name\" value=\"$username\" />";
-		echo "<input type=\"submit\" value=\"No\" />";
-		echo "</form></div>";
+		$return .= "<div style=\"text-align: center;\">";
+		$return .= "<h1>Confirm account deletion!</h1>";
+		$return .= "<p style=\"color: red;\">Delete \"$username\" permanently?</p>";
+		$return .= "<form method=\"POST\"><input type=\"submit\" name=\"confirmdelete\" value=\"Yes\" />";
+		$return .= "<input type=\"hidden\" name=\"name\" value=\"$username\" />";
+		$return .= "<input type=\"submit\" value=\"No\" />";
+		$return .= "</form></div>";
 	}
+	
+	return $return;
 
 }
 
-function echo_links() {
+
+// Gets the links to display.
+function get_links() {
 	$letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	$letter_links = "<p><a href=\"users.php\">All</a> ";
 	$len = strlen($letters);
@@ -47,18 +76,27 @@ function echo_links() {
 		$letter_links .= "<a class=\"small\" href=\"users.php?p=^$l\">$l</a> ";
 	}
 	$letter_links .= "</p>";
-	echo $letter_links;
+
+	return $letter_links;
 }
 
-function echo_users() {
+
+// Get the list of users for this page.
+function get_user_list() {
+
+	$ret_users = "";
 
 	if(isset($_GET['p'])) {
 		$pattern = plain_escape($_GET['p']);
 	} else {
 		header("Location: users.php?p=");
+		session_write_close();
 		exit;
 	}
-	$users = M_Login::get_users($pattern);
+
+	$res = M_Login::get_users($pattern);
+	$users = $res->value;
+
 	$len = count($users);
 	if($len > 0) {
 		for($i = 0; $i < $len; $i++) {
@@ -79,15 +117,15 @@ function echo_users() {
 				$verified = "False";
 			}
 
-			echo <<<EOT
+			$ret_users .= <<<EOT
 
 			<tr>
 				<td><p>$name</p></td>
 				<td><p>$email</p></td>
 				<td><form method="POST">
-					<input type="submit" name="toggle" value="$admin"</p>
-					<input type="hidden" name="adminval" value="$adminval"</p>
-					<input type="hidden" name="name" value="$name"</p>
+					<input type="submit" name="toggle" value="$admin" />
+					<input type="hidden" name="adminval" value="$adminval" />
+					<input type="hidden" name="name" value="$name" />
 				</form></td>
 				<td><p>$dob</p></td>
 				<td><p>$id</p></td>
@@ -103,36 +141,10 @@ EOT;
 		}
 
 	} else {
-		echo "<tr><p style=\"color: red;\">No usernames found matching \"$pattern\".</p></tr>";
+		$ret_users .= "<tr><p style=\"color: red;\">No usernames found matching \"$pattern\".</p></tr>";
 	}
+
+	return $ret_users;
 }
+
 ?>
-
-<?php open_html(NULL); disp_banner("admin"); ?>
-
-<h3>Here are all the users on the site.</h3>
-
-<?php echo_links(); ?>
-<form method="POST">
-	<input type="text" name="searchstring" />
-	<input type="submit" name="search" value="Search" />
-</form>
-
-<?php display_confirm(); ?>
-
-<table class="smallborder">
-<tr class="smallborder">
-	<th><p>Username</p></th>
-	<th><p>Email</p></th>
-	<th><p>Type</p></th>
-	<th><p>D.O.B</p></th>
-	<th><p>ID</p></th>
-	<th><p>Verified</p></th>
-	<th><p>Delete</p></th>
-</tr>
-
-<?php echo_users(); ?>
-
-</table>
-
-<?php close_html() ?>

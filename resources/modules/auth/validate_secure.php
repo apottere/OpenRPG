@@ -1,5 +1,7 @@
 <?php
+// Functions for escaping, hashing, and validating.
 
+// Hash a password with 256-bit Blowfish Crypt.
 function hash_pass($pass, $salt) {
 
 	$salt = substr($salt, 0, 16);
@@ -8,6 +10,7 @@ function hash_pass($pass, $salt) {
 	return crypt($pass, $salt);
 }
 
+// Get a random alphanum string of arbitrary length.
 function rand_string($length, $charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
 {
     $str = '';
@@ -18,6 +21,7 @@ function rand_string($length, $charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
     return $str;
 }
 
+// Check if a username is valid.
 function validate_username($user) {
 	
 	$len = strlen($user);
@@ -38,6 +42,7 @@ function validate_username($user) {
 
 }
 
+// Check if an email address is valid.
 function check_email_address($email) {
   // First, we check that there's one @ symbol, 
   // and that the lengths are right.

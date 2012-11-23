@@ -1,4 +1,6 @@
 <?php
+
+// Return struct for login module, contains a code and value.
 class O_Login
 {
 

@@ -25,7 +25,7 @@ function login($username, $password) {
 	} else {
 		
 		// Login success, set hash and return new user row.
-		$login_hash = sha1(time());
+		$login_hash = sha1(uniqid());
 		mysql_query("update users set login_hash='$login_hash' where username='$name';");
 		$query = mysql_query("select * from $table where username='$name' and passwd='$pass';");
 		$row = mysql_fetch_array($query);

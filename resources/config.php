@@ -32,6 +32,7 @@ $pages = array(
 	"login" => (dirname(__FILE__) . $pages_dir . "/login"),
 	"home" => (dirname(__FILE__) . $pages_dir . "/home"),
 	"profile" => (dirname(__FILE__) . $pages_dir . "/profile"),
+	"admin" => (dirname(__FILE__) . $pages_dir . "/admin"),
 	);
 
 

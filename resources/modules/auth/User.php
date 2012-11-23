@@ -1,4 +1,6 @@
 <?php
+
+// User class for login module, defines what a "user" is made up of.
 class User
 {
 

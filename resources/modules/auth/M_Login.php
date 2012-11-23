@@ -1,5 +1,6 @@
 <?php
 
+// API for login module.
 class M_Login
 {
 
@@ -47,7 +48,7 @@ class M_Login
 		return change_email($user, $pass, $salt, $email);
 	}
 
-	public static function change_password() {
+	public static function change_password($user, $salt, $pass, $newpass, $newpass2) {
 
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
@@ -66,6 +67,7 @@ class M_Login
 	public static function delete_user($name) {
 
 		global $auth_conf;
+		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/delete_user.php");
 		return delete_user($name);
 	}
@@ -73,6 +75,7 @@ class M_Login
 	public static function toggle_admin($username, $adminval) {
 
 		global $auth_conf;
+		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/toggle_admin.php");
 		return toggle_admin($username, $adminval);
 	}
