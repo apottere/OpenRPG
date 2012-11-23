@@ -3,14 +3,15 @@ OpenRPG
 
 Abstract
 ~~~~~~~~
-A web based RPG framework using PHP, MySQL, and JavaEE.
+A web based RPG framework using PHP and MySQL.
 
 Installation
 ~~~~~~~~~~~~
 
 1. Clone github repository to "/home/user/".
 2. Set apache alias for your user to "/home/user/public_html".
-3. Create the MySQL database:
+3. Create the MySQL databases:
 	* Create a database for OpenRPG tables.
-	* Add "templates/users.sql" to the database with "$ mysql -u user_name -p db_name < users.sql"
-4. Read "resources/config.php" and "resources/auth_config.php" to create your local configs.
+	* Add "resources/templates/users.sql" to the database with "$ mysql -u user_name -p db_name < users.sql"
+4. Read "resources/config.php" to create your local configs.
+	* Read "resources/modules/auth/auth_config.php" to create local auth module configs.
