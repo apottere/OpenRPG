@@ -3,6 +3,7 @@
 	// Init page.
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
+	include($modules['character']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -33,6 +34,7 @@
 		$type = "User";
 	}
 
+	$row = M_Character::get_character($user);
 	// Display page.
 	include("$srcdir/profile.php");
 

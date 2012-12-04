@@ -3,6 +3,7 @@
 	// Init page.
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
+	include($modules['character']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -37,13 +38,8 @@
 	}
 
 	$user = plain_escape($_GET['user']);
-	// End changes made.
-
-	mysql_connect($auth_conf['db_loc'], $auth_conf['db_user'], $auth_conf['db_pass']);
-        mysql_select_db($auth_conf['db_name']);
-
-        $query = mysql_query("select * from `character` where `username`='$user';");
-	$row = mysql_fetch_array( $query );
+	$row = M_Character::get_character($user);
+	
 
 ?>
 

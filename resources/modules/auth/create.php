@@ -58,7 +58,7 @@ function create($username, $password, $password2, $email, $email2) {
 		// Success, add user and return.
 		mysql_query("insert into $table (username, passwd, email, admin, created, id, verified) values('$name', '$pass', '$email', 0, now(), '$salt', 0);");
 
-		//makes a character entry
+		// Makes a character entry
 		mysql_query(" insert into `character` values( '$name','none','none','none',1,1,1,1,1,1,1,'none');");
 
 		$_SESSION['error'] = "Account created successfully!";

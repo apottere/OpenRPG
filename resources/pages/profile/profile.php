@@ -1,10 +1,9 @@
 
 <?php 
-	mysql_connect($auth_conf['db_loc'], $auth_conf['db_user'], $auth_conf['db_pass']);
-        mysql_select_db($auth_conf['db_name']);
 
-        $query = mysql_query("select * from `character` where `username`='$user';");
-	$row = mysql_fetch_array( $query );
+
+
+
 
 ?>
 

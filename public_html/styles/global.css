@@ -172,9 +172,39 @@ p.banner {
 
 }
 
-table.smallborder, .smallborder tr {
-	border:solid;
-	border-width:2px;
+table.info {
+	text-align: left;
+	width: 100%;
+	border-width: 0px;
+}
+
+.info th {
+	padding-bottom: 10px;
+}
+
+table.infocenter {
+	text-align: center;
+	width: 100%;
+}
+
+.infocenter th {
+	padding-bottom: 10px;
+}
+
+table.infocenterborder {
+	border: 2px solid black;
+	text-align: center;
+	width: 100%;
+}
+
+table.smallborder {
+	width: 100%;
+	border: solid;
+	border-width: 0px;
+}
+
+.smallborder th {
+	padding-bottom: 10px;
 }
 
 input.small {

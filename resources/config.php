@@ -18,14 +18,15 @@ $sess_name = "OpenRPG";						// PHP session name.
 $blinks = array(
 	"home" => array("Home", "/index.php"),
 	"friends" => array("Friends", "/friends/friends.php"),
-	"battle" => array("Battle", "/battle/battle.php"),
 	"profile" => array("Profile", "/profile/profile.php"),
+	"battle" => array("Battle", "/battle/battle.php"),
 	"admin" => array("Admin Page", "/admin/admin.php"),
 	);										// Dynamic link array.
 
 $modules = array(
 	"auth" => (dirname(__FILE__) . $modules_dir . "/auth/auth_config.php"),
 	"friends" => (dirname(__FILE__) . $modules_dir . "/friends/friends_config.php"),
+	"character" => (dirname(__FILE__) . $modules_dir . "/character/character_config.php"),
 	);										// Module array.
 
 $pages = array(
@@ -33,6 +34,7 @@ $pages = array(
 	"home" => (dirname(__FILE__) . $pages_dir . "/home"),
 	"profile" => (dirname(__FILE__) . $pages_dir . "/profile"),
 	"admin" => (dirname(__FILE__) . $pages_dir . "/admin"),
+	"friends" => (dirname(__FILE__) . $pages_dir . "/friends"),
 	);
 
 

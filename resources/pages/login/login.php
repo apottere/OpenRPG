@@ -3,7 +3,9 @@
 	This page requires authentication!
 </h1>
 <p align="center">If you have already registered, please log in.  If not, <a href="login.php?a=create">create an account</a> or go back to <a href="/">the homepage</a>.</p>
+
 <p class="error"><?php echo $template['error']; ?></p>
+
 <br />
 <table class="noborder" align="center">
 	<form method="POST" action="login.php?a=login">

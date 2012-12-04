@@ -15,3 +15,4 @@ Installation
 	* Add "resources/templates/users.sql" to the database with "$ mysql -u user_name -p db_name < users.sql"
 4. Read "resources/config.php" to create your local configs.
 	* Read "resources/modules/auth/auth_config.php" to create local auth module configs.
+5. Create a public_html/.htaccess that contains "ErrorDocument 404 <alias>/404.php" to use the custom 404 not found page, where <alias> is your apache alias.

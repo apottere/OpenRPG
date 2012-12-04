@@ -22,8 +22,8 @@ $friends_conf = array(
 	"table" => "friends",
 );
 
-if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_frinds_config)) {
-	include($local_frinds_config);
+if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_friends_config)) {
+	include($local_friends_config);
 }
 
 include("M_Friends.php");

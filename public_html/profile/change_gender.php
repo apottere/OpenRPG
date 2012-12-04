@@ -1,8 +1,10 @@
 <?php
+	
 
 	// Init page.
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
+	include($modules['character']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -12,15 +14,13 @@
 	if(isset($_POST['changeestuff'])) {
 
 
-		// Change email submitted.
-		mysql_connect($auth_conf['db_loc'], $auth_conf['db_user'], $auth_conf['db_pass']);
-	      	mysql_select_db($auth_conf['db_name']);
 		$newstuff = $_POST['newstuff'];
 
 		$user = $_SESSION['user']->name;
 		$email = $_SESSION['user']->email;
-
-       	$res =  mysql_query("update `character` set `gender`='$newstuff' where `username`='$user';");
+		$res = M_Character::get_character($user);
+		$res['gender'] = $newstuff;
+		M_Character::update_character($res);
 
 		header("Location: profile.php");
 

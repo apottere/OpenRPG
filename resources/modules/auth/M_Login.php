@@ -29,7 +29,7 @@ class M_Login
 	public static function email($name, $email, $id) {
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/email.php");
-		return email($name, $email, $id, $msg);
+		return email($name, $email, $id);
 	}
 
 	public static function verify($name, $id) {
@@ -74,6 +74,13 @@ class M_Login
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/toggle_admin.php");
 		return toggle_admin($username, $adminval);
+	}
+
+	public static function check_unique($username) {
+
+		global $auth_conf;
+		include($auth_conf['authdir'] . "/check_unique.php");
+		return check_unique($username);
 	}
 }
 ?>

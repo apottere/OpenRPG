@@ -18,7 +18,7 @@ class M_Friends
 
 		global $friends_conf;
 		include($friends_conf['friendsdir'] . "/get_list.php");
-		return request($username);
+		return get_list($username);
 	}
 }
 ?>
