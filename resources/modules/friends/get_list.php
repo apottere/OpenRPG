@@ -13,22 +13,29 @@ function get_list($username) {
 	$username = plain_escape($username);
 
 	// Get sent requests.
-	$query = mysql_query("select requested from $table where requester='$username' and confirmed=0;");
+	$query = mysql_query("select requested,date from $table where requester='$username' and confirmed=0;");
 	$sent = array();
 	while($row = mysql_fetch_array($query)) {
 		array_push($sent, $row);
 	}
 
 	// Get pending requests.
-	$query = mysql_query("select requested from $table where requested='$username' and confirmed=0;");
+	$query = mysql_query("select requester from $table where requested='$username' and confirmed=0;");
 	$pending = array();
 	while($row = mysql_fetch_array($query)) {
-		array_push($pending, $row);
+		array_push($pending, $row[0]);
 	}
 
 	// Get accepted requests.
-	$query = mysql_query("select requested from $table where (requester='$username' or requested='$username') and confirmed=1;");
+	$query = mysql_query("select requested,date from $table where requester='$username' and confirmed=1;");
+
 	$accepted = array();
+	while($row = mysql_fetch_array($query)) {
+		array_push($accepted, $row);
+	}
+
+	$query = mysql_query("select requester,date from $table where requested='$username' and confirmed=1;");
+
 	while($row = mysql_fetch_array($query)) {
 		array_push($accepted, $row);
 	}

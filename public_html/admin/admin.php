@@ -4,6 +4,8 @@
 	session_name($sess_name); session_start();
 
 	auth_check("admin");
+	
+	header("Location: users.php");
 
 	open_html(NULL);
 	disp_banner("admin");

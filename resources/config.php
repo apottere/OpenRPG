@@ -20,7 +20,7 @@ $blinks = array(
 	"friends" => array("Friends", "/friends/friends.php"),
 	"profile" => array("Profile", "/profile/profile.php"),
 	"battle" => array("Battle", "/battle/battle.php"),
-	"admin" => array("Admin Page", "/admin/admin.php"),
+	"admin" => array("Admin", "/admin/admin.php"),
 	);										// Dynamic link array.
 
 $modules = array(
@@ -86,47 +86,52 @@ function disp_banner($p) {
 	// Construct links.
 	$links_out = "";
 	foreach($blinks as $k => $v) {
-		$links_out .= "<td width=\"$prct%\"";
+		$links_out .= "<td width=\"$prct%\"><p class=\"nav\"><a class=\"nav";
 		if(isset($p)) {
 			if($k == $p) {
-			$links_out .= " class=\"selected\"";
+			$links_out .= " selected";
 			}
 		}
-		$links_out .= "><a href=\"$alias$v[1]\">$v[0]</a></td>";
+		$links_out .= "\" href=\"$alias$v[1]\">$v[0]</a></p></td>";
 	}
 
 	// Echo page.
 	echo <<<EOT
-	<table width=100%>
+	<div class="header_background">
+	<div class="header">
+	<table class="banner" width=100%>
 	<tr>
-		<td width=33.3%>
-		<br />
-			<p class="banner" style="text-align:left;"><a href="/">Home</a></p>
+		<td>
+			<h1 class="title">Open RPG</h1>
 		</td>
-		<td width=33.3%>
-			<h1 style="text-align:center">Open RPG</h1>
+		<td>
+			<table class="nav">
+			$links_out
+			</table>
 		</td>
-		<td width=33.3%>
-			<br />
-			<p class="banner">Logged in as: $user<br />
-			<a href="/OpenRPG/login.php?a=logout">Log out</a> | <a href="/OpenRPG/login.php?a=switch">Switch user</a></p>
+
+		<td>
+			<p class="banner">$user</p>
+		</td>
+		<td>
+			<p><a class="banner" href="/OpenRPG/login.php?a=logout">Log out</a> | <a class="banner" href="/OpenRPG/login.php?a=switch">Switch user</a></p>
 		</td>
 	</tr>
 	</table>
 
 	<table width="100%" class="nav">
-		<tr>
-			$links_out
-		</tr>
 	</table>
-	<hr />
+	</div>
+	</div>
+	<div class="content">
 EOT;
 }
 
 
 // Close html block.
 function close_html() {
-	echo "</div></body></html>";
+	echo "</div></div></body></html>";
+	
 }
 
 ?>

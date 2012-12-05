@@ -8,31 +8,43 @@
 
 	// Authenticate.
 	auth_check("user");
+	
+	if(isset($_GET['p']) && (
+				$_GET['p'] == "friends" ||
+				$_GET['p'] == "pending" ||
+				$_GET['p'] == "sent" )) {
 
-	// Get friends from database.
-	$res = M_Friends::get_list($_SESSION['user']->name);
+		$template['page'] = $_GET['p'];
 
-	// Handle return value and set template variables.
-	$template['sent'] = $res->value['sent'];
-	$template['pending'] = $res->value['pending'];
-	$template['accepted'] = $res->value['accepted'];
+		// Get friends from database.
+		$res = M_Friends::get_list($_SESSION['user']->name);
 
-	$template['user'] = $_SESSION['user']->name;
-	$template['error'] = "";
+		// Handle return value and set template variables.
+		$template['sent'] = $res->value['sent'];
+		$template['pending'] = $res->value['pending'];
+		$template['accepted'] = $res->value['accepted'];
 
-	if(isset($_SESSION['error'])) {
-		$template['error'] = $_SESSION['error'];
-		unset($_SESSION['error']);
+		$template['user'] = $_SESSION['user']->name;
+		$template['error'] = "";
+
+		if(isset($_SESSION['error'])) {
+			$template['error'] = $_SESSION['error'];
+			unset($_SESSION['error']);
+		}
+
+		// Open HTML and banner.
+		open_html(NULL);
+		disp_banner("friends");
+
+		include($pages['friends'] . "/friends.php");
+
+		// Close HTML and session.
+		close_html();
+
+	} else {
+		header("Location: friends.php?p=friends");
 	}
 
-	// Open HTML and banner.
-	open_html(NULL);
-	disp_banner("friends");
-
-	include($pages['friends'] . "/friends.php");
-
-	// Close HTML and session.
-	close_html();
 	session_write_close();
 
 ?>

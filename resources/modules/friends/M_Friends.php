@@ -10,7 +10,27 @@ class M_Friends
 		return request($requester, $requested);
 	}
 
-	public static function respond($username, $requester, $response) {
+	public static function deny($username, $requester) {
+		
+		global $friends_conf;
+		include($friends_conf['friendsdir'] . "/deny.php");
+		return deny($username, $requester);
+
+	}
+
+	public static function remove($username, $requester) {
+		
+		global $friends_conf;
+		include($friends_conf['friendsdir'] . "/remove.php");
+		return remove($username, $requester);
+
+	}
+
+	public static function confirm($username, $requester) {
+		
+		global $friends_conf;
+		include($friends_conf['friendsdir'] . "/confirm.php");
+		return confirm($username, $requester);
 
 	}
 

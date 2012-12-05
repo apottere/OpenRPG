@@ -24,7 +24,7 @@
 		} else {
 
 			// Proceed with friend request.
-			$res = M_Friends::request($_SESSION['user']->name, $_POST['name']);
+			$res = M_Friends::request($_SESSION['user']->name, $res->value);
 
 			// Check code.
 			if($res->code == "error") {
@@ -33,7 +33,25 @@
 				$_SESSION['error'] = $res->value;
 			}
 		}
+
+	} else if(isset($_POST['denyFriend'])) {
+
+		// Remove friend request.
+		$res = M_Friends::deny($_SESSION['user']->name, $_POST['username']);
+
+
+	} else if(isset($_POST['confirmFriend'])) {
+	
+		// Confirm friend request.
+		$res = M_Friends::confirm($_SESSION['user']->name, $_POST['username']);
+
+	} else if(isset($_POST['remove'])) {
+		
+		// Delete from friends.
+		$res = M_Friends::remove($_SESSION['user']->name, $_POST['username']);
+
 	}
+
 	header("Location: friends.php");
 	session_write_close();
 

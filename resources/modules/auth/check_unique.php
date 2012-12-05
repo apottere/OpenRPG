@@ -22,7 +22,7 @@ function check_unique($username) {
 	} else {
 		
 		// Success and exit.
-		return new O_Login("success", NULL);
+		return new O_Login("success", mysql_fetch_array($query)[0]);
 	}
 }
 ?>

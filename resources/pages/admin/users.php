@@ -1,15 +1,21 @@
-<h3>Here are all the users on the site.</h3>
-
-<?php echo $template['links']; ?>
-<form method="POST">
-	<input type="text" name="searchstring" />
-	<input type="submit" name="search" value="Search" />
-</form>
+<table style="width: 100%; margin-bottom: 20px;">
+<tr>
+<td>
+	<?php echo $template['links']; ?>
+</td>
+<td style="text-align: right;">
+	<form method="POST">
+		<input type="text" name="searchstring" />
+		<input type="submit" name="search" value="Search" />
+	</form>
+</td>
+</tr>
+</table>
 
 <?php echo $template['confirm']; ?>
 
-<table class="smallborder">
-<tr class="smallborder">
+<table class="info">
+<tr>
 	<th><p>Username</p></th>
 	<th><p>Email</p></th>
 	<th><p>Type</p></th>

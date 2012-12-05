@@ -69,7 +69,7 @@ function get_confirm() {
 // Gets the links to display.
 function get_links() {
 	$letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	$letter_links = "<p><a href=\"users.php\">All</a> ";
+	$letter_links = "<p><a class=\"small\" href=\"users.php\">All</a> ";
 	$len = strlen($letters);
 	for($i = 0; $i < $len; $i++) {
 		$l = $letters[$i];
@@ -112,9 +112,9 @@ function get_user_list() {
 			$dob = $users[$i]->dob;
 			$id = $users[$i]->id;
 			if($users[$i]->verified) {
-				$verified = "True";
+				$verified = "Y";
 			} else {
-				$verified = "False";
+				$verified = "N";
 			}
 
 			$ret_users .= <<<EOT
@@ -122,17 +122,17 @@ function get_user_list() {
 			<tr>
 				<td><p>$name</p></td>
 				<td><p>$email</p></td>
-				<td><form method="POST">
-					<input type="submit" name="toggle" value="$admin" />
-					<input type="hidden" name="adminval" value="$adminval" />
-					<input type="hidden" name="name" value="$name" />
+				<td><form class="centerv" method="POST">
+					<input class="centerv" type="submit" name="toggle" value="$admin" />
+					<input class="centerv "type="hidden" name="adminval" value="$adminval" />
+					<input class="centerv" type="hidden" name="name" value="$name" />
 				</form></td>
 				<td><p>$dob</p></td>
 				<td><p>$id</p></td>
 				<td><p>$verified</p></td>
-				<td><form method="POST">
+				<td><form class="centerv" method="POST">
 					<input type="hidden" name="name" value="$name" />
-					<input type="submit" name="delete" value="Delete" />
+					<input class="centerv" type="submit" name="delete" value="Delete" />
 				</form></td>
 			</tr>
 
