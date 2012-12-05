@@ -16,6 +16,7 @@
 	<tr>
 		<td><p>Password: </p></td>
 		<td><input type="password" name="password" /></td>
+		<td><p style="margin-left:10px"> -- INSECURE CONNECTION</p></td>
 	</tr>
 	<tr>
 		<td><p>Confirm password: </p></td>
@@ -24,6 +25,7 @@
 	<tr>
 		<td><p>E-mail: </p></td>
 		<td><input type="text" name="email" /></td>
+		<td><p style="margin-left:10px"> -- will be verified</p></td>
 	</tr>
 	<tr>
 		<td><p>Confirm e-mail: </p></td>

@@ -31,6 +31,9 @@
 
 				// Set session error.
 				$_SESSION['error'] = $res->value;
+
+			} else {
+				$_SESSION['error'] = "Friend request sent.";
 			}
 		}
 
@@ -50,6 +53,11 @@
 		// Delete from friends.
 		$res = M_Friends::remove($_SESSION['user']->name, $_POST['username']);
 
+	} else if(isset($_POST['search'])) {
+		$p = $_POST['username'];
+		header("Location: $alias/profile/profile_look.php?search=$p");
+		session_write_close();
+		exit;
 	}
 
 	header("Location: friends.php");

@@ -8,6 +8,13 @@ class M_Character {
 		return delete_all($username);
 	}
 
+	public static function get_char_obj($user) {
+
+		global $char_conf;
+		include_once($char_conf['chardir']. "/get_char_obj.php");
+		return get_char_obj($user);
+	}
+
 	public static function get_character($user) {
 
 

@@ -1,7 +1,7 @@
 <table style="width: 100%">
 <tr>
 <td>
-	<h1><?php echo $user; ?>'s Profile</h1>
+	<h1 style="display: table-cell"><?php echo $user; ?>'s Profile</h1>
 </td>
 <td style="text-align:right;">
 	<form method="POST" action="profile_look.php">

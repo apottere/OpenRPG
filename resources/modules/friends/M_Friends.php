@@ -34,6 +34,14 @@ class M_Friends
 
 	}
 
+	public static function check_friends($username, $friend) {
+		
+		global $friends_conf;
+		include($friends_conf['friendsdir'] . "/check_friends.php");
+		return check_friends($username, $friend);
+
+	}
+
 	public static function confirm($username, $requester) {
 		
 		global $friends_conf;

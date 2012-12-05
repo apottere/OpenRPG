@@ -4,6 +4,7 @@
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
 	include($modules['character']);
+	include($modules['friends']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -33,42 +34,135 @@
 	if(isset($_POST['LookUp'])) {
 		$user = plain_escape($_POST['user']);
 		header("Location: profile_look.php?user=$user");
+		close_html();
 		session_write_close();
 		exit;
 	}
+	
+	if( (!isset($_GET['user'])) || 
+				($_GET['user'] == "" ||
+				$_GET['user'] == NULL)) {
+
+		if(isset($_GET['user']) && $_GET['user'] == "") {
+			header("Location: profile_look.php?search=");
+			close_html();
+			session_write_close();
+			exit;
+		}
+		
+
+		if(isset($_GET['search'])) {
+
+			$p = $_GET['search'];
+			$template['p'] = plain_escape($p);
+			
+			$letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			$letter_links = "<p><a class=\"small\" href=\"$alias/profile/profile_look.php?search=\">All</a> ";
+			$len = strlen($letters);
+			for($i = 0; $i < $len; $i++) {
+				$l = $letters[$i];
+				$letter_links .= "<a class=\"small\" href=\"$alias/profile/profile_look.php?search=^$l\">$l</a> ";
+			}
+			$letter_links .= "</p>";
+
+			$template['letter_links'] = $letter_links;
+			$template['userlist'] = M_Login::get_users($p)->value;
+
+			include($pages['profile'] . "/search.php");
+
+			close_html();
+			session_write_close();
+			exit;
+
+		} else {
+			header("Location: profile.php");
+			close_html();
+			session_write_close();
+			exit;
+		}
+	}
+
+
+
 
 	$user = plain_escape($_GET['user']);
-	$row = M_Character::get_character($user);
+	$res = M_Login::check_unique($user);
+	if($res->code == "error") {
+		
+		$_SESSION['error'] = $res->value;
+		header("Location: profile_look.php?search=$user");
+		close_html();
+		session_write_close();
+		exit;
+
+
+	} else {
+
+		$user = $res->value;
+		
+		if($user == $_SESSION['user']->name) {
+
+			header("Location: profile.php");
+			close_html();
+			session_write_close();
+			exit;
+
+		}
+
+		$row = M_Character::get_character($user);
 	
+?>
+<table style="width: 100%">
+<tr>
+<td>
+	<h1 style="display: table-cell"><?php echo $user; ?>'s Profile</h1>
+</td>
+<td>
+
+<?php
+	$res = M_Friends::check_friends($_SESSION['user']->name, $user);
+
+	if($res->code == "success") {
+
+		if($res->value == 1) {
+			echo "<p>(Already friends)</p>";
+
+		} else {
+			echo "<p>(Request pending)</p>";
+		
+		}
+
+	} else {
 
 ?>
 
+	<form action="<?php echo $alias; ?>/friends/friends_action.php" method="POST">
+		<input type="hidden" name="name" value="<?php echo $user; ?>" />
+		<input type="submit" name="add" value="Add Friend"/>
+	</form>
+
+<?php
+	}
+?>
+
+</td>
+<td style="text-align:right;">
+	<form method="POST" action="profile_look.php">
+		<input type="text" name="user" />
+		<input type="submit" name="LookUp" value="Search Profiles" />
+	</form>
+</td>
+</tr>
+</table>
+<p class="error"><?php echo $error?></p>
+
 <img src="<?php echo $row['picture']; ?>" alt="Profile Picture" width="275" height="300">
 
+<br />
 
-<h1><?php echo $user; ?>'s Profile</h1>
-<p class="error"><?php echo $error?></p>
 <table>
 <tr>
-	
-
-
-</tr>
-<tr>
 	<td><p>Username: </p></td><td><p style="margin-left:7px"><?php echo $user; ?></p></td>
-
-<td> 
-<form method="POST" action="profile_look.php">
-<table class="noborder">
-	<tr>
-		<td><p style="margin-right:7px"<p>Look At User's Profile: </p></td>
-		<td><input type="text" name="user" /></td>
-		<td><input type="submit" name="LookUp" value="Search" /></td>
-		
-	</tr>
-	</table>
-</form>
-</td>
 
 </tr>
 
@@ -101,6 +195,7 @@
 	
 
 <?php
+	}
 	// Close html block and end session.
 	close_html();
 	session_write_close();

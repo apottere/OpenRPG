@@ -27,6 +27,7 @@ $modules = array(
 	"auth" => (dirname(__FILE__) . $modules_dir . "/auth/auth_config.php"),
 	"friends" => (dirname(__FILE__) . $modules_dir . "/friends/friends_config.php"),
 	"character" => (dirname(__FILE__) . $modules_dir . "/character/character_config.php"),
+	"battle" => (dirname(__FILE__) . $modules_dir . "/battle/battle_config.php"),
 	);										// Module array.
 
 $pages = array(
@@ -35,6 +36,7 @@ $pages = array(
 	"profile" => (dirname(__FILE__) . $pages_dir . "/profile"),
 	"admin" => (dirname(__FILE__) . $pages_dir . "/admin"),
 	"friends" => (dirname(__FILE__) . $pages_dir . "/friends"),
+	"battle" => (dirname(__FILE__) . $pages_dir . "/battle"),
 	);
 
 

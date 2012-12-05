@@ -1,18 +1,4 @@
-<table style="width: 100%; padding-bottom:0px;">
-<tr>
-	<td style="text-align: left;">
-		<h3><?php echo $template['user'] ?>'s Friends List</h3>
-	</td>
-
-	<td style="text-align: right;">
-		<form action="friends_action.php" method="POST">
-			<input type="text" name="name" />
-			<input type="submit" name="add" value="Add Friend"/>
-			<input type="submit" name="search" value="Search"/>
-		</form>
-	</td>
-</tr>
-</table>
+<h3>Your battle page</h3>
 
 <p class="error"><?php echo $template['error']; ?></p>
 
@@ -25,8 +11,8 @@
 	<tr>
 		<td>
 			<p><a class="infocenter
-				<?php if($template['page'] == "friends") { echo " selected"; } ?>
-			" href="friends.php?p=friends">Friends (<?php
+				<?php if($template['page'] == "battles") { echo " selected"; } ?>
+			" href="static.php?p=battles">Battles (<?php
 				echo count($template['accepted']);
 			?>)</a></p>
 		</td>
@@ -35,7 +21,7 @@
 		<td>
 			<p><a class="infocenter
 				<?php if($template['page'] == "pending") { echo " selected"; } ?>
-			" href="friends.php?p=pending">Pending (<?php
+			" href="static.php?p=pending">Pending (<?php
 				echo count($template['pending']);
 			?>)</a></p>
 
@@ -45,7 +31,7 @@
 		<td>
 			<p><a class="infocenter
 				<?php if($template['page'] == "sent") { echo " selected"; } ?>
-			" href="friends.php?p=sent">Sent (<?php
+			" href="static.php?p=sent">Sent (<?php
 				echo count($template['sent']);
 			?>)</a></p>
 		</td>
@@ -58,8 +44,17 @@
 <table class="info">
 <?php
 
-	if($template['page'] == "friends") {
+	if($template['page'] == "battles") {
 
+		echo <<<EOT
+			<tr>
+				<th><p>Username</p></th>
+				<th><p>Fight</p></p></th>
+				<th><p>Your Move</p></p></th>
+				<th><p>Their Move</p></p></th>
+				<th><p>Duration</p></p></th>
+			</tr>
+EOT;
 
 		// Get all friends from array.
 		$list = $template['accepted'];
@@ -70,35 +65,42 @@
 				$friend = $list[$i];
 				$name = $friend[0];
 				$datetime = date('g\:i a\,  n\/j\/Y' , strtotime($friend[1]));
+				if($friend[2]) {
+					$ym = "Moved";
+				} else {
+					$ym = "Pending";
+				}
+
+				if($friend[3]) {
+					$tm = "Moved";
+				} else {
+					$tm = "Pending";
+				}
+
 				echo <<<EOT
 				<tr>
 					<td><p><a class="friends" href="$alias/profile/profile_look.php?user=$name">$name</a></p></td>
-					<td><p><a class="friends" href="$alias/battle/battle.php?o=$name">[battle]</a></p></td>
+					<td><p><a class="friends" href="$alias/battle/battle.php?o=$name">[continue]</a></p></td>
+					<td><p>$ym</p></td>
+					<td><p>$tm</p></td>
 					<td><p>$datetime</p></td>
-					<td>
-						<form class="centerv" method="POST" action="friends_action.php">
-							<input class="centerv" type="submit" name="remove" value="Remove" />
-							<input class="centerv" type="hidden" name="username" value=$name />
-						</form>
-					</td>
 				</tr>
 EOT;
 			}
 
 		} else {
-			echo "<tr><td colspan=\"4\"><p>Forever alone.</p></td>";
-//			echo "<td><p>N/A</p></td></tr>";
+			echo "<tr><td colspan=\"4\"><p>No active battles.</p></td>";
 		}
 
 
 	} else if($template['page'] == "sent") {
 
-/*		echo <<<EOT
+		echo <<<EOT
 			<tr>
-				<th><p>Name</p></th>
-				<th><p>Sent</p></p></th>
+				<th><p>Username</p></th>
+				<th><p>Time Sent</p></p></th>
 			</tr>
-EOT; */
+EOT;
 	
 		$list = $template['sent'];
 		$list_len = count($list);
@@ -111,17 +113,17 @@ EOT; */
 			}
 
 		} else {
-			echo "<tr><td colspan=\"2\"><p>None</p></td></tr>";
+			echo "<tr><td colspan=\"2\"><p>No sent battle requests.</p></td></tr>";
 		}
 
 	} else if($template['page'] == "pending") {
 
-/*		echo <<<EOT
+		echo <<<EOT
 			<tr>
 				<th><p>Name</p></th>
 				<th><p>Action</p></th>
 			</tr>
-EOT; */
+EOT;
 
 		$list = $template['pending'];
 		$list_len = count($list);
@@ -131,17 +133,16 @@ EOT; */
 				echo <<<EOT
 				<tr>
 					<td><p><a class="friends" href="$alias/profile/profile_look.php?user=$user">$user</a></p></td>
-					<td><form class="centerh" action="friends_action.php" method="POST">
-						<input class="centerh" type="submit" name="confirmFriend" value="Confirm" />
-						<input class="centerh" type="submit" name="denyFriend" value="Deny" />
+					<td><form class="centerh" action="battle_action.php" method="POST">
+						<input class="centerh" type="submit" name="accept" value="Confirm" />
+						<input class="centerh" type="submit" name="deny" value="Deny" />
 						<input class="centerh" type="hidden" name="username" value=$user />
 					</form></td></tr>
 EOT;
 			}
 
 		} else {
-			echo "<tr><td><p>None</p></td>";
-			echo "<td><p>N/A</p></td></tr>";
+			echo "<tr><td colspan=\"2\"><p>No pending battle requests.</p></td>";
 		}
 
 	}
