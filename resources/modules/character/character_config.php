@@ -13,13 +13,13 @@ $local_character_config = "local_character_config.php";
 ################################################################################
 /* VARIABLES: */
 
-$character_conf = array(
-	"characterdir" => realpath(dirname(__FILE__)),
+$char_conf = array(
+	"chardir" => realpath(dirname(__FILE__)),
 	"db_loc" => "localhost",
 	"db_user" => "openrpg",
 	"db_name" => "openrpg",
 	"db_pass" => "",
-	"table" => "character",
+	"table" => "openrpg.character",
 );
 
 if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_character_config)) {
@@ -27,7 +27,7 @@ if(file_exists(realpath(dirname(__FILE__)) . "/" . $local_character_config)) {
 }
 
 include("M_Character.php");
-//include("O_Character.php");
+include("O_Character.php");
 include("Character.php");
 
 ################################################################################

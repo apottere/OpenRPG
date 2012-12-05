@@ -14,7 +14,7 @@
 
 <?php echo $template['confirm']; ?>
 
-<table class="info">
+<table class="info2">
 <tr>
 	<th><p>Username</p></th>
 	<th><p>Email</p></th>

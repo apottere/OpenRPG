@@ -1,6 +1,12 @@
 <?php
 class M_Character {
 
+	public static function delete_all($username) {
+
+		global $char_conf;
+		include($char_conf['chardir']. "/delete_all.php");
+		return delete_all($username);
+	}
 
 	public static function get_character($user) {
 

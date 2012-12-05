@@ -3,6 +3,8 @@
 	// Init page.
 	include(realpath(dirname(__FILE__) . "/../../resources/config.php"));
 	include($modules['auth']);
+	include($modules['friends']);
+	include($modules['character']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -20,6 +22,8 @@
 	} else if(isset($_POST['confirmdelete'])) {
 		
 		// Confirm and delete user from DB.
+		M_Friends::remove_all($_POST['name']);
+		M_Character::delete_all($_POST['name']);
 		M_Login::delete_user($_POST['name']);
 
 	} else if(isset($_POST['toggle'])) {

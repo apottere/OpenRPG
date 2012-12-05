@@ -261,7 +261,26 @@ table.info {
 	padding-top: 15px !important;
 	padding-bottom: 15px !important;
 	padding-right: 5px !important;
-	padding-left: 5px; !important;
+	padding-left: 5px !important;
+	vertical-align: middle;
+	border-spacing: 0px;
+	border: 1px solid #d5d7db;
+	
+}
+
+table.info2 {
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	border-spacing: 0px;
+	border: 1px solid #d5d7db;
+}
+
+.info2 td, .info2 th {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-right: 5px;
+	padding-left: 5px;
 	vertical-align: middle;
 	border-spacing: 0px;
 	border: 1px solid #d5d7db;

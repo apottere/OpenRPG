@@ -8,11 +8,16 @@ auth_check("user");
 
 if(isset($_POST['changepassword'])) {
 
-	$res = M_Login::change_password();
-	if($res == "error") {
+	$res = M_Login::change_password($_SESSION['user']->name, $_SESSION['user']->id, $_POST['password'], $_POST['newpassword'], $_POST['newpassword2']);
+
+	if($res->code == "error") {
+		$_SESSION['error'] = $res->value;
+		session_write_close();
 		header("Location: change_password.php");
 	
 	} else {
+		$_SESSION['error'] = $res->value;
+		session_write_close();
 
 		header("Location: profile.php");
 	}
@@ -34,7 +39,7 @@ if(isset($_POST['changepassword'])) {
 	}
 
 	echo <<<EOT
-
+$error
 <form method="POST">
 	<table class="noborder">
 	<tr>

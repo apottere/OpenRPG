@@ -13,7 +13,7 @@ function change_password($user, $salt, $pass, $newpass, $newpass2) {
 	// Get required variables.
 	$user = plain_escape($user);
 	$salt = plain_escape($salt);
-	$pass = hash_pass(plain_escape($password), $salt);
+	$pass = hash_pass(plain_escape($pass), $salt);
 	$newpass = hash_pass(plain_escape($newpass), $salt);
 	$newpass2 = hash_pass(plain_escape($newpass2), $salt);
 
@@ -24,18 +24,19 @@ function change_password($user, $salt, $pass, $newpass, $newpass2) {
 	if(mysql_num_rows($query) == 0) {
 		
 		// Error and return.
-		return new O_Login("error", "Username or password incorrect, please try again."
+		exit;
+		return new O_Login("error", "Username or password incorrect, please try again.");
 	}
 
 	// Test new password.
 	if($newpass != $newpass2) {
 		
 		// Error and return.
-		return new O_Login("error", "New passwords did not match, please try again."
+		return new O_Login("error", "New passwords did not match, please try again.");
 	}
 
 	// Change password and success.
 	mysql_query("update $table set passwd='$newpass' where username='$user';");
-	return new O_Login("success", "Password updated successfully!"
+	return new O_Login("success", "Password updated successfully!");
 }
 ?>

@@ -52,7 +52,7 @@ class M_Login
 		global $auth_conf;
 		include($auth_conf['authdir'] . "/validate_secure.php");
 		include($auth_conf['authdir'] . "/change_password.php");
-		return change_password();
+		return change_password($user, $salt, $pass, $newpass, $newpass2);
 	}
 
 	public static function get_users($pattern) {

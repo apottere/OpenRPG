@@ -26,6 +26,14 @@ class M_Friends
 
 	}
 
+	public static function remove_all($username) {
+		
+		global $friends_conf;
+		include($friends_conf['friendsdir'] . "/remove_all.php");
+		return remove_all($username);
+
+	}
+
 	public static function confirm($username, $requester) {
 		
 		global $friends_conf;
