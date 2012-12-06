@@ -31,12 +31,14 @@ function get_list($username) {
 
 	$accepted = array();
 	while($row = mysql_fetch_array($query)) {
+		array_push($row, 0);
 		array_push($accepted, $row);
 	}
 
 	$query = mysql_query("select p1,date,p1turn,p2turn from $table where p2='$username' and accepted=1;");
 
 	while($row = mysql_fetch_array($query)) {
+		array_push($row, 1);
 		array_push($accepted, $row);
 	}
 

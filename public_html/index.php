@@ -3,6 +3,7 @@
 	// Include default config and needed modules.
 	include(realpath(dirname(__FILE__) . "/../resources/config.php"));
 	include($modules['auth']);
+	include($modules['character']);
 	session_name($sess_name); session_start();
 
 	// Check the user has authenticated.

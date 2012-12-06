@@ -49,6 +49,11 @@ if(file_exists($local_config)) {
 ################################################################################
 /* FUNCTIONS: */
 
+// Return MySQL-like date.
+function mysql_date() {
+	return date('Y-m-d H:i:s');
+}
+
 // Escape html and mysql.
 function plain_escape($str) {
 	return mysql_real_escape_string(htmlspecialchars($str));
@@ -65,7 +70,7 @@ function open_html($add) {
 		<title>Open RPG</title>
 		<link rel="stylesheet" type="text/css" href="$stylesheet">
 	</head>
-	<body>
+	<body onload="load()">
 		<div class="main">
 EOT;
 

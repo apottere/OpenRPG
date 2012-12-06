@@ -1,5 +1,5 @@
 <?php
-function create_battle($p1, $p2, $p1hp, $p2hp) {
+function create_battle($p1, $p2, $time) {
 
 	global $battle_conf;
 
@@ -9,10 +9,10 @@ function create_battle($p1, $p2, $p1hp, $p2hp) {
 
 	$p1 = plain_escape($p1);
 	$p2 = plain_escape($p2);
-	$p1hp = plain_escape($p1hp);
-	$p2hp = plain_escape($p2hp);
+	
+	$string = $time . "---> Battle requested by " . $p1 . ".\n";
 
-	$query = mysql_query("insert into $table (p1, p2, p1hp, p2hp, accepted, date, p1turn, p2turn) values('$p1', '$p2', '$p1hp', '$p2hp', 0, now(), 0, 0);");
+	$query = mysql_query("insert into $table (p1, p2, accepted, date, log) values('$p1', '$p2', 0, now(), '$string');");
 
 
 	return new O_Battle("success", NULL);

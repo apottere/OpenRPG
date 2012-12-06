@@ -1,5 +1,12 @@
 <?php
 class M_Character {
+	
+	public static function level_up($username, $exp, $lvl, $hp, $magic, $melee, $ranged) {
+
+		global $char_conf;
+		include($char_conf['chardir']. "/level_up.php");
+		return level_up($username, $exp, $lvl, $hp, $magic, $melee, $ranged);
+	}
 
 	public static function delete_all($username) {
 

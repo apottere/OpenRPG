@@ -5,6 +5,7 @@
 	include($modules['auth']);
 	include($modules['friends']);
 	include($modules['character']);
+	include($modules['battle']);
 	session_name($sess_name); session_start();
 
 	// Authenticate.
@@ -22,6 +23,7 @@
 	} else if(isset($_POST['confirmdelete'])) {
 		
 		// Confirm and delete user from DB.
+		M_Battle::remove_all($_POST['name']);
 		M_Friends::remove_all($_POST['name']);
 		M_Character::delete_all($_POST['name']);
 		M_Login::delete_user($_POST['name']);

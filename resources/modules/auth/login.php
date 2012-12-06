@@ -33,3 +33,4 @@ function login($username, $password) {
 		return new O_Login("success", new User($row));
 	}
 }
+?>

@@ -8,7 +8,7 @@ function check_exists($user, $op) {
 	mysql_select_db($battle_conf['db_name']);
 	$table = $battle_conf['table'];
 
-	$query = mysql_query("select accepted from $table where (p1='$user' and p2='$op') or (p1='$op' or p2='$user');");
+	$query = mysql_query("select accepted from $table where (p1='$user' and p2='$op') or (p1='$op'and p2='$user');");
 
 	if(mysql_num_rows($query) > 0) {
 

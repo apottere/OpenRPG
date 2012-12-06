@@ -11,11 +11,34 @@ class M_Battle
 
 	}
 
-	public static function accept_battle($user, $op) {
+	public static function store_battle($battle) {
+
+		global $battle_conf;
+		include_once($battle_conf['battledir'] . "/store_battle.php");
+		return store_battle($battle);
+
+	}
+
+
+	public static function remove_all($user) {
+
+		global $battle_conf;
+		include($battle_conf['battledir'] . "/remove_all.php");
+		return b_remove_all($user);
+
+	}
+
+	public static function accept_battle($user, $op,
+						$p1hp, $p2hp, $p1mc, $p2mc,
+						$p1rg, $p2rg, $p1ml, $p2ml,
+						$p1lvl, $p2lvl, $time ) {
 
 		global $battle_conf;
 		include($battle_conf['battledir'] . "/accept_battle.php");
-		return accept_battle($user, $op);
+		return accept_battle($user, $op,
+						$p1hp, $p2hp, $p1mc, $p2mc,
+						$p1rg, $p2rg, $p1ml, $p2ml,
+						$p1lvl, $p2lvl, $time );
 
 	}
 
@@ -42,11 +65,18 @@ class M_Battle
 		return get_battle($username, $opponent);
 	}
 
-	public static function create_battle($p1, $p2, $p1hp, $p2hp) {
+	public static function delete_battle($username, $opponent) {
+
+		global $battle_conf;
+		include($battle_conf['battledir'] . "/delete_battle.php");
+		return delete_battle($username, $opponent);
+	}
+
+	public static function create_battle($p1, $p2, $time) {
 
 		global $battle_conf;
 		include($battle_conf['battledir'] . "/create_battle.php");
-		return create_battle($p1, $p2, $p1hp, $p2hp);
+		return create_battle($p1, $p2, $time);
 	}
 
 }

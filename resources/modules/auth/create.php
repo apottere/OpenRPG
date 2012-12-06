@@ -59,7 +59,7 @@ function create($username, $password, $password2, $email, $email2) {
 		mysql_query("insert into $table (username, passwd, email, admin, created, id, verified) values('$name', '$pass', '$email', 0, now(), '$salt', 0);");
 
 		// Makes a character entry
-		mysql_query(" insert into `character` values( '$name','none','none','none',1,1,1,1,1,1,1,'none');");
+		mysql_query(" insert into `character` values( '$name','none','none','none',1,1,5,1,1,1,1,'none');");
 
 		$_SESSION['error'] = "Account created successfully!";
 		return new O_Login("success", array($name, $email, $salt));

@@ -10,7 +10,7 @@ function get_battle($username, $opponent) {
 	$user = plain_escape($username);
 	$op = plain_escape($opponent);
 
-	$query = mysql_query("select * from $table where (p1='$user and p2='$op') or (p1='$op' and p2='$user');");
+	$query = mysql_query("select * from $table where (p1='$user' and p2='$op') or (p1='$op' and p2='$user');");
 
 	if(mysql_num_rows($query) <= 0) {
 		
@@ -18,8 +18,8 @@ function get_battle($username, $opponent) {
 
 	} else {
 		
-		$row = mysql_fetch_array($query)[0];
-		return new O_Battle("success", new Battle($row));
+		$row = mysql_fetch_object($query, 'Battle');
+		return new O_Battle("success", $row);
 
 	}
 

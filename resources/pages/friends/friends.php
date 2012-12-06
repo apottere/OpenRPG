@@ -26,28 +26,39 @@
 		<td>
 			<p><a class="infocenter
 				<?php if($template['page'] == "friends") { echo " selected"; } ?>
-			" href="friends.php?p=friends">Friends (<?php
-				echo count($template['accepted']);
-			?>)</a></p>
+			" href="friends.php?p=friends">Friends 
+												<?php
+													if(count($template['accepted']) > 0) {
+														echo "(" . count($template['accepted']) . ")";
+													}
+												?>
+			</a></p>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<p><a class="infocenter
 				<?php if($template['page'] == "pending") { echo " selected"; } ?>
-			" href="friends.php?p=pending">Pending (<?php
-				echo count($template['pending']);
-			?>)</a></p>
-
+			" href="friends.php?p=pending">Pending 
+												<?php
+													if(count($template['pending']) > 0) {
+														echo "(" . count($template['pending']) . ")";
+													}
+												?>
+			</a></p>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<p><a class="infocenter
 				<?php if($template['page'] == "sent") { echo " selected"; } ?>
-			" href="friends.php?p=sent">Sent (<?php
-				echo count($template['sent']);
-			?>)</a></p>
+			" href="friends.php?p=sent">Sent 
+												<?php
+													if(count($template['sent']) > 0) {
+														echo "(" . count($template['sent']) . ")";
+													}
+												?>
+			</a></p>
 		</td>
 	</tr>
 	</table>
