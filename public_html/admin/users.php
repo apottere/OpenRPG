@@ -90,6 +90,8 @@ function get_links() {
 // Get the list of users for this page.
 function get_user_list() {
 
+	global $alias;
+
 	$ret_users = "";
 
 	if(isset($_GET['p'])) {
@@ -126,7 +128,7 @@ function get_user_list() {
 			$ret_users .= <<<EOT
 
 			<tr>
-				<td><p>$name</p></td>
+				<td><p><a class="friends" href="$alias/profile/profile_look.php?user=$name">$name</a></p></td>
 				<td><p>$email</p></td>
 				<td><form class="centerv" method="POST">
 					<input class="centerv" type="submit" name="toggle" value="$admin" />
