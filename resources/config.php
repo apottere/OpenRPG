@@ -138,7 +138,11 @@ EOT;
 // Close html block.
 function close_html() {
 	echo "</div></div></body></html>";
+	echo "<div id='footer'>";
+	echo "Created By: Alexander Thomas, Andrew Potter, Ishmeal Hosein, and Kenneth Rios</div>";
+
 	
 }
 
 ?>
+

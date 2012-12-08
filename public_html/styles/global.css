@@ -159,7 +159,7 @@ div.content {
 
 div.main {
 	width:85%; 
-	min-height:97%;
+	min-height:94%;
 	margin-top: -8px;
 	margin-bottom:30px;
 	margin-left:auto; 
@@ -490,3 +490,29 @@ form.centerh, input.centerh {
 	color: BLUE;
 	font-size: 10px;
 }
+
+
+#footer{
+   // position:fixed;   //makes footer always appear....took it out due to complaints
+    left:0px;
+    bottom:0px;
+    height:30px;
+    width:100%;
+ //   background:black;
+    color:white;
+	text-align:center;
+ text-shadow: 0 0 10px #fff,
+                   0 0 20px #fff,
+                   0 0 30px #fff,
+                   0 0 40px #ff00de,
+                   0 0 70px #ff00de,
+                   0 0 80px #ff00de,
+                   0 0 100px #ff00de,
+                   0 0 150px #ff00de;
+
+}
+/* for ie6*/
+* html #footer{
+  //  position:absolute;
+    top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}	

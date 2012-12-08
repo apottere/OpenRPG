@@ -20,7 +20,10 @@
 	include("$srcdir/home.php");
 
 	// Close HTML and session.
+
 	close_html();
+
 	session_write_close();
 
 ?>
+
